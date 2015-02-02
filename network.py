@@ -32,13 +32,9 @@ class Network():
         self.num_layers = len(sizes)
         self.sizes = sizes
         self.biases = [np.random.randn(y, 1) for y in sizes[1:]]
-        print('initial biases:')
-        print(self.biases)
 
         self.weights = [np.random.randn(y, x)
                         for x, y in zip(sizes[:-1], sizes[1:])]
-        print('initial weights:')
-        print(self.weights)
 
     def feedforward(self, a):
         """Return the output of the network if ``a`` is input."""
@@ -116,11 +112,13 @@ class Network():
             zs.append(z)
             activation = sigmoid_vec(z)
             activations.append(activation)
+
         # backward pass
         delta = self.cost_derivative(activations[-1], y) * \
             sigmoid_prime_vec(zs[-1])
         nabla_b[-1] = delta
         nabla_w[-1] = np.dot(delta, activations[-2].transpose())
+
         # Note that the variable l in the loop below is used a little
         # differently to the notation in Chapter 2 of the book.  Here,
         # l = 1 means the last layer of neurons, l = 2 is the
@@ -141,12 +139,12 @@ class Network():
         #   print(resx)
         #   print(y)
         test_results = [(np.argmax(self.feedforward(x)), np.argmax(y)) for (x, y) in test_data]
-        
+
         #print('weights are: ')
         #print(self.weights)
         #print('bias is: ')
         #print(self.biases)
-        #for (x, y) in test_data:	
+        #for (x, y) in test_data:
         #   print(self.feedforward(x))
         #   print(y)
         #   print('')

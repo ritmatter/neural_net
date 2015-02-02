@@ -7,11 +7,6 @@ and ``load_data_wrapper``.  In practice, ``load_data_wrapper`` is the
 function usually called by our neural network code.
 """
 
-#### Libraries
-# Standard library
-import cPickle
-import gzip
-
 # Third-party libraries
 from pymongo import MongoClient
 import numpy as np
@@ -36,7 +31,7 @@ def load_data():
 
         attributes = np.array([[take_out, caters, takes_reservations, delivery]])
         attributes = np.transpose(attributes)
-        data_entry = (attributes, stars)
+        data_entry = (attributes, vectorized_result(stars))
 
         if i < 7000:
             training_data.append(data_entry)
@@ -46,4 +41,12 @@ def load_data():
 
     test_data = np.array(test_data)
     training_data = np.array(training_data)
+
     return (training_data, test_data)
+
+def vectorized_result(j):
+    e = np.zeros((11, 1))
+    i = j/0.5
+    e[i] = 1.0
+    return e
+

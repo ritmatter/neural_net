@@ -1,3 +1,4 @@
+from __future__ import print_function
 """
 network.py
 ~~~~~~~~~~
@@ -30,28 +31,27 @@ class Network():
         ever used in computing the outputs from later layers."""
         self.num_layers = len(sizes)
         self.sizes = sizes
-        print self.sizes
         self.biases = [np.random.randn(y, 1) for y in sizes[1:]]
-        print 'initial biases:'
-        print self.biases
+        print('initial biases:')
+        print(self.biases)
 
         self.weights = [np.random.randn(y, x)
                         for x, y in zip(sizes[:-1], sizes[1:])]
-        print 'initial weights:'
-        print self.weights
+        print('initial weights:')
+        print(self.weights)
 
     def feedforward(self, a):
         """Return the output of the network if ``a`` is input."""
-        print 'feeding forward'
+        #print('feeding forward')
 
         for b, w in zip(self.biases, self.weights):
-            print 'b is: ' + str(b)
-            print 'w is: ' + str(w)
-            print 'a is: ' + str(a)
-            print 'arg to signmoid_vec is' + str(np.dot(w, a) + b)
+            #print('b is: ' + str(b))
+            #print('w is: ' + str(w))
+            #print('a is: ' + str(a))
+            #print('arg to signmoid_vec is' + str(np.dot(w, a) + b))
             a = sigmoid_vec(np.dot(w, a)+b)
-            print a
-        print ""
+            #print(a)
+        #print("")
         return a
 
     def SGD(self, training_data, epochs, mini_batch_size, eta,
@@ -67,17 +67,17 @@ class Network():
         #if len(test_data): n_test = len(test_data)
         n_test = len(test_data)
         n = len(training_data)
-        for j in xrange(epochs):
+        for j in range(epochs):
             random.shuffle(training_data)
             mini_batches = [
                 training_data[k:k+mini_batch_size]
-                for k in xrange(0, n, mini_batch_size)]
+                for k in range(0, n, mini_batch_size)]
             for mini_batch in mini_batches:
                 self.update_mini_batch(mini_batch, eta)
             #if test_data:
-            print "Epoch {0}: {1} / {2}".format(j, self.evaluate(test_data), n_test)
+            print("Epoch {0}: {1} / {2}".format(j, self.evaluate(test_data), n_test))
             #else:
-            #    print "Epoch {0} complete".format(j)
+            #    print("Epoch {0} complete".format(j))
 
     def update_mini_batch(self, mini_batch, eta):
         """Update the network's weights and biases by applying
@@ -87,9 +87,9 @@ class Network():
         nabla_b = [np.zeros(b.shape) for b in self.biases]
         nabla_w = [np.zeros(w.shape) for w in self.weights]
         for x, y in mini_batch:
-            print x
-            print y
-            print ''
+            #print(x)
+            #print(y)
+            #print('')
             delta_nabla_b, delta_nabla_w = self.backprop(x, y)
             nabla_b = [nb+dnb for nb, dnb in zip(nabla_b, delta_nabla_b)]
             nabla_w = [nw+dnw for nw, dnw in zip(nabla_w, delta_nabla_w)]
@@ -99,6 +99,7 @@ class Network():
                        for b, nb in zip(self.biases, nabla_b)]
 
     def backprop(self, x, y):
+
         """Return a tuple ``(nabla_b, nabla_w)`` representing the
         gradient for the cost function C_x.  ``nabla_b`` and
         ``nabla_w`` are layer-by-layer lists of numpy arrays, similar
@@ -126,7 +127,7 @@ class Network():
         # second-last layer, and so on.  It's a renumbering of the
         # scheme in the book, used here to take advantage of the fact
         # that Python can use negative indices in lists.
-        for l in xrange(2, self.num_layers):
+        for l in range(2, self.num_layers):
             z = zs[-l]
             spv = sigmoid_prime_vec(z)
             delta = np.dot(self.weights[-l+1].transpose(), delta) * spv
@@ -135,20 +136,26 @@ class Network():
         return (nabla_b, nabla_w)
 
     def evaluate(self, test_data):
-        """Return the number of test inputs for which the neural
-        network outputs the correct result. Note that the neural
-        network's output is assumed to be the index of whichever
-        neuron in the final layer has the highest activation."""
-        for (x,y) in test_data:
-          #print ""
-          f = self.feedforward(x)
-
-        test_results = [(np.argmax(self.feedforward(x)), y) for (x, y) in test_data]
-        #print x
-        #print y
-        #print ''
+        #for (x, y) in test_data:
+        #   resx = self.feedforward(x)
+        #   print(resx)
+        #   print(y)
+        test_results = [(np.argmax(self.feedforward(x)), np.argmax(y)) for (x, y) in test_data]
+        
+        #print('weights are: ')
+        #print(self.weights)
+        #print('bias is: ')
+        #print(self.biases)
+        #for (x, y) in test_data:	
+        #   print(self.feedforward(x))
+        #   print(y)
+        #   print('')
+        #for (x, y) in test_results:
+        #   print(x)
+        #   print(y)
+        #   print('')
         return sum(int(x == y) for (x, y) in test_results)
-
+        #return 0
     def cost_derivative(self, output_activations, y):
         """Return the vector of partial derivatives \partial C_x /
         \partial a for the output activations."""

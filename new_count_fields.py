@@ -6,7 +6,7 @@ def load_data():
 
     # Connect to mongo
     client = MongoClient('localhost', 27017)
-    db = client.yelp_data
+    db = client.new_yelp_data
     businesses = db.businesses
 
     # Get the example restaurant

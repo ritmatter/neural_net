@@ -12,6 +12,7 @@ and omits many desirable features.
 #### Libraries
 # Standard library
 import random
+import csv
 
 # Third-party libraries
 import numpy as np
@@ -60,9 +61,16 @@ class Network():
         network will be evaluated against the test data after each
         epoch, and partial progress printed out.  This is useful for
         tracking progress, but slows things down substantially."""
-        #if len(test_data): n_test = len(test_data)
+        if len(test_data): n_test = len(test_data)
         n_test = len(test_data)
         n = len(training_data)
+
+        # initializing list to store performance data
+        test_percent_error = [0] * (epochs + 1)
+        train_percent_error = [0] * (epochs + 1)
+        test_percent_error[0] = "Testing Error"
+        train_percent_error[0] = "Training Error"
+
         for j in range(epochs):
             random.shuffle(training_data)
             mini_batches = [
@@ -70,10 +78,25 @@ class Network():
                 for k in range(0, n, mini_batch_size)]
             for mini_batch in mini_batches:
                 self.update_mini_batch(mini_batch, eta)
-            #if test_data:
-            print("Epoch {0}: {1} / {2}".format(j, self.evaluate(test_data), n_test))
-            #else:
-            #    print("Epoch {0} complete".format(j))
+            if not n_test == 0:
+                test_evaluate = self.evaluate(test_data)
+                train_evaluate = self.evaluate(training_data)
+                test_percent_error[j + 1] = (n_test - test_evaluate) / n_test * 100
+                train_percent_error[j + 1] = (n - train_evaluate) / n * 100
+                print("Epoch {0} {1}: {2} / {3}".format(j, "test correct", test_evaluate, n_test))
+                print("Epoch {0} {1}: {2} / {3}".format(j, "train correct", train_evaluate, n))
+            else:
+                print("Epoch {0} complete".format(j))
+
+        # create a csv file to plot progress and results
+        csv_name = '_'.join(map(str, self.sizes)) + ".csv"
+        with open(csv_name,"w+") as csvf:
+            out = csv.writer(csvf, delimiter=',', quoting=csv.QUOTE_ALL)
+            first_row = ["Epoch"]
+            first_row.extend(range(0, epochs))
+            out.writerow(first_row)
+            out.writerow(test_percent_error)
+            out.writerow(train_percent_error)
 
     def update_mini_batch(self, mini_batch, eta):
         """Update the network's weights and biases by applying
@@ -134,26 +157,9 @@ class Network():
         return (nabla_b, nabla_w)
 
     def evaluate(self, test_data):
-        #for (x, y) in test_data:
-        #   resx = self.feedforward(x)
-        #   print(resx)
-        #   print(y)
         test_results = [(np.argmax(self.feedforward(x)), np.argmax(y)) for (x, y) in test_data]
-
-        #print('weights are: ')
-        #print(self.weights)
-        #print('bias is: ')
-        #print(self.biases)
-        #for (x, y) in test_data:
-        #   print(self.feedforward(x))
-        #   print(y)
-        #   print('')
-        #for (x, y) in test_results:
-        #   print(x)
-        #   print(y)
-        #   print('')
         return sum(int(x == y) for (x, y) in test_results)
-        #return 0
+    
     def cost_derivative(self, output_activations, y):
         """Return the vector of partial derivatives \partial C_x /
         \partial a for the output activations."""

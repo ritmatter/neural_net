@@ -157,7 +157,6 @@ def load_data():
         #     test_data.append(data_entry)
         i += 1
 
-    data_matrix = np.array(data_matrix)
     random.shuffle(data_matrix)
     test_data = data_matrix[0:TEST_SIZE]
     training_data = data_matrix[TEST_SIZE + 1: len(data_matrix)]

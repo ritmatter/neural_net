@@ -173,7 +173,7 @@ def load_data():
       { "attributes.Parking.validated": { "$exists": True }},
       { "attributes.Parking.valet": { "$exists": True }},
 
-      { "attributes.Has TV": { "$exists": True }},
+      { "attributes.Has TV": { "$exists": True }},                   # eliminating adds 1000 to training example.
       { "attributes.Outdoor Seating": { "$exists": True }},
       { "attributes.Attire": { "$exists": True }},
       { "attributes.Takes Reservations": { "$exists": True }},

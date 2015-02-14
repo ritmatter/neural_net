@@ -97,6 +97,7 @@ class Network():
             out.writerow(first_row)
             out.writerow(test_percent_error)
             out.writerow(train_percent_error)
+        return [test_percent_error[-1], train_percent_error[-1]]
 
     def update_mini_batch(self, mini_batch, eta):
         """Update the network's weights and biases by applying
@@ -158,6 +159,8 @@ class Network():
 
     def evaluate(self, test_data):
         test_results = [(np.argmax(self.feedforward(x)), np.argmax(y)) for (x, y) in test_data]
+ #       for (x, y) in test_data:
+ #           print(np.argmax(y), end='')
         return sum(int(x == y) for (x, y) in test_results)
     
     def cost_derivative(self, output_activations, y):

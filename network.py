@@ -17,6 +17,7 @@ import csv
 # Third-party libraries
 import numpy as np
 
+
 class Network():
 
     def __init__(self, sizes):
@@ -61,6 +62,8 @@ class Network():
         network will be evaluated against the test data after each
         epoch, and partial progress printed out.  This is useful for
         tracking progress, but slows things down substantially."""
+        test_results = [(np.argmax(self.feedforward(x)), np.argmax(y)) for (x, y) in training_data]
+
         if len(test_data): n_test = len(test_data)
         n_test = len(test_data)
         n = len(training_data)
@@ -107,9 +110,6 @@ class Network():
         nabla_b = [np.zeros(b.shape) for b in self.biases]
         nabla_w = [np.zeros(w.shape) for w in self.weights]
         for x, y in mini_batch:
-            #print(x)
-            #print(y)
-            #print('')
             delta_nabla_b, delta_nabla_w = self.backprop(x, y)
             nabla_b = [nb+dnb for nb, dnb in zip(nabla_b, delta_nabla_b)]
             nabla_w = [nw+dnw for nw, dnw in zip(nabla_w, delta_nabla_w)]
@@ -159,8 +159,6 @@ class Network():
 
     def evaluate(self, test_data):
         test_results = [(np.argmax(self.feedforward(x)), np.argmax(y)) for (x, y) in test_data]
- #       for (x, y) in test_data:
- #           print(np.argmax(y), end='')
         return sum(int(x == y) for (x, y) in test_results)
     
     def cost_derivative(self, output_activations, y):

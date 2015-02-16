@@ -15,8 +15,9 @@ import random
 from pymongo import MongoClient
 import numpy as np
 
-def load_data():
 
+def load_data():
+    
     TEST_SIZE = 2000
     # Connect to mongo
     client = MongoClient('localhost', 27017)
@@ -161,6 +162,10 @@ def load_data():
     test_data = data_matrix[0:TEST_SIZE]
     training_data = data_matrix[TEST_SIZE + 1: len(data_matrix)]
 
+    print("Class 1 count is:")
+    print(class1)
+    print("Class 0 count is:")
+    print(class0)
     return (training_data, test_data)
 
 # Returns noise level rating (average, quiet, loud, very_loud)
@@ -194,10 +199,18 @@ def get_attire(attire):
 
 # Returns the label for a restaurant based on stars and review count
 def restaurant_score(stars, review_count):
+    global class1
+    global class0
     score = 0.7 * stars + 0.3 * review_count
     val = np.zeros((2, 1))
     if score > 18.5:
+        class1 += 1
         val[1] = 1
     else:
+        class0 += 1
         val[0] = 1
     return val
+
+class1 = 0
+class0 = 0
+load_data()

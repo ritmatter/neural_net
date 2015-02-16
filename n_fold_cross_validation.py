@@ -13,25 +13,39 @@ import new_yelp_loader
 # Third party imports
 import numpy as np
 
+'''This function is called at the very end of this program to start n-fold cross validation.
+You can modify that final line to run cross validation with your own parameters. 
+The N is the number of n in the n-fold part of the cross validation, trialN is the number
+of trials per one neural network in the real test run (to account for local minimum issues)
+validation_network_layers is a list of network structures, eg, [[33, 6, 2], [33, 4, 2], [33, 2, 2]]
+would be a list of three network structures, with 1 hidden layer of 6, 4, and 2 nodes respectively.
+filename is the filename of the csv file that is outputted at the end of this run. Do not put the 
+extention .csv - that is handled by the program.'''
 def n_cross_validation(N, trialN, validation_network_layers, filename):
     (training_data, test_data) = new_yelp_loader.load_data()
     random.shuffle(training_data)
     n_partitions = n_partition(N, training_data)
 
+    # formatting processes for output. Not part of the algorithm.
     final_performance_training = ["Training error mean"]
     final_performance_testing = ["Testing error mean"]
     final_performance_training_real = ["Training error real"]
     final_performance_testing_real = ["Testing error real"]
     performance_training = [[] for x in range(len(validation_network_layers))]
     performance_testing = [[] for x in range(len(validation_network_layers))]
+
     for j in range(N):
+        # package up the test and training set for the cross validation portion
         cross_test_data = np.array(n_partitions[j])
         cross_validation_data = []
         for k in range(N):
             if k != j: 
                 cross_validation_data.extend(n_partitions[k])
         cross_validation_data = np.array(cross_validation_data)
+
         p = 0
+        # do cross validation for each neural network in validation_network_layers
+        # for this particular test and training set
         for network_layer in validation_network_layers:
             print("Performing " + str(j) + "th cross validation for network " + ' '.join(map(str, network_layer)))
             val = np.copy(cross_validation_data)       
@@ -39,17 +53,16 @@ def n_cross_validation(N, trialN, validation_network_layers, filename):
             net = network.Network(network_layer)
             # TODO make the SGD parameters variable as well?
             results = net.SGD(val, 10, 10, 3.0, test)
-            print(results)
             performance_training[p].append(results[1])
             performance_testing[p].append(results[0])
             p += 1
 
-    # TODO need to find actual function PROB FIXED
+    # average out the cross validation errors for each network
     for q in range(len(validation_network_layers)):
         final_performance_training.append(np.mean(performance_training[q]))
         final_performance_testing.append(np.mean(performance_testing[q]))
 
-    # TODO average out the actual performance data over around 3 trials?
+    # run each network on actual training and test set
     u = 0
     performance_training_real = [[] for x in range(len(validation_network_layers))]
     performance_testing_real = [[] for x in range(len(validation_network_layers))]
@@ -64,6 +77,7 @@ def n_cross_validation(N, trialN, validation_network_layers, filename):
             performance_testing_real[u].append(results_actual[0])
         u += 1
 
+    # average out the actual performance data over Ntrials
     for q in range(len(validation_network_layers)):
         final_performance_training_real.append(np.mean(performance_training_real[q]))
         final_performance_testing_real.append(np.mean(performance_testing_real[q]))

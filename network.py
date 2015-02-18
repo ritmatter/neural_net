@@ -40,16 +40,8 @@ class Network():
 
     def feedforward(self, a):
         """Return the output of the network if ``a`` is input."""
-        #print('feeding forward')
-
         for b, w in zip(self.biases, self.weights):
-            #print('b is: ' + str(b))
-            #print('w is: ' + str(w))
-            #print('a is: ' + str(a))
-            #print('arg to signmoid_vec is' + str(np.dot(w, a) + b))
             a = sigmoid_vec(np.dot(w, a)+b)
-            #print(a)
-        #print("")
         return a
 
     def SGD(self, training_data, epochs, mini_batch_size, eta,
@@ -92,7 +84,7 @@ class Network():
                 print("Epoch {0} complete".format(j))
 
         # create a csv file to plot progress and results
-        csv_name = '_'.join(map(str, self.sizes)) + ".csv"
+        csv_name = "./outputs/" + '_'.join(map(str, self.sizes)) + ".csv"
         with open(csv_name,"w+") as csvf:
             out = csv.writer(csvf, delimiter=',', quoting=csv.QUOTE_ALL)
             first_row = ["Epoch"]

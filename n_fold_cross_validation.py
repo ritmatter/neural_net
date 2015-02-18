@@ -36,23 +36,19 @@ def n_cross_validation(N, trialN, validation_network_layers, filename):
 
     for j in range(N):
         # package up the test and training set for the cross validation portion
-        cross_test_data = np.array(n_partitions[j])
+        cross_test_data = n_partitions[j]
         cross_validation_data = []
         for k in range(N):
             if k != j: 
                 cross_validation_data.extend(n_partitions[k])
-        cross_validation_data = np.array(cross_validation_data)
-
         p = 0
         # do cross validation for each neural network in validation_network_layers
         # for this particular test and training set
         for network_layer in validation_network_layers:
             print("Performing " + str(j) + "th cross validation for network " + ' '.join(map(str, network_layer)))
-            val = np.copy(cross_validation_data)       
-            test = np.copy(cross_test_data)
             net = network.Network(network_layer)
             # TODO make the SGD parameters variable as well?
-            results = net.SGD(val, 10, 10, 3.0, test)
+            results = net.SGD(cross_validation_data, 20, 10, 3.0, cross_test_data)
             performance_training[p].append(results[1])
             performance_testing[p].append(results[0])
             p += 1
@@ -70,9 +66,7 @@ def n_cross_validation(N, trialN, validation_network_layers, filename):
         for t in range(trialN):
             print("Performing " + str(t) + "th real trial for network " + ' '.join(map(str, network_layer)))
             net = network.Network(network_layer)
-            train = np.copy(training_data)
-            test = np.copy(test_data)
-            results_actual = net.SGD(train, 10, 10, 3.0, test)
+            results_actual = net.SGD(training_data, 20, 10, 3.0, test_data)
             performance_training_real[u].append(results_actual[1])
             performance_testing_real[u].append(results_actual[0])
         u += 1
@@ -97,24 +91,10 @@ def n_cross_validation(N, trialN, validation_network_layers, filename):
 '''N is the number of partitions to make and data is the array of
 data to partition. Returns list of n partitioned version of data'''
 def n_partition(N, data):
-    training_data_size = len(data)
-    partition_size = math.floor(training_data_size/ N)
-    n_partitions = [data[k:k+partition_size]
-    for k in range(0, training_data_size, partition_size)]
+    return [ data[i::N] for i in range(N) ]
 
-    # make sure to distribute extra examples
-    i = 0
-    while (len(n_partitions) > N):
-        extra_partition = n_partitions.pop()
-        # TODO delete the N index partition!
-        for element in extra_partition:
-            i = i % (N - 1)
-            n_partitions[i] = np.append(n_partitions[i], np.array([element]))
-            i += 1
-    return n_partitions
-
-#n_cross_validation(10, 3, [[33, 30, 2], [33, 29, 2], [33, 28, 2], [33, 27, 2], [33, 26, 2], [33, 25, 2], [33, 24, 2], [33, 23, 2], [33, 22, 2], [33, 21, 2], [33, 20, 2], [33, 19, 2], [33, 18, 2], [33, 17, 2], [33, 16, 2], [33, 15, 2],[33, 14, 2], [33, 13, 2], [33, 12, 2], [33, 11, 2], [33, 10, 2], [33, 9, 2], [33, 8, 2], [33, 7, 2], [33, 6, 2], [33, 5, 2], [33, 4, 2], [33, 3, 2], [33, 2, 2], [33, 1, 2], [33, 2]], "validation_test_3_with_avg")
+#n_cross_validation(10, 3, [[33, 30, 2], [33, 29, 2], [33, 28, 2], [33, 27, 2], [33, 26, 2], [33, 25, 2], [33, 24, 2], [33, 23, 2], [33, 22, 2], [33, 21, 2], [33, 20, 2], [33, 19, 2], [33, 18, 2], [33, 17, 2], [33, 16, 2], [33, 15, 2],[33, 14, 2], [33, 13, 2], [33, 12, 2], [33, 11, 2], [33, 10, 2], [33, 9, 2], [33, 8, 2], [33, 7, 2], [33, 6, 2], [33, 5, 2], [33, 4, 2], [33, 3, 2], [33, 2, 2], [33, 1, 2], [33, 2]], "validation_test_4_with_avg")
 #n_cross_validation(10, 3, [[33, 6, 2], [33, 4, 2], [33, 2, 2]], "testfiledump")
-n_cross_validation(3, 3, [[33, 6, 2]], "testfiledump2")
+n_cross_validation(3, 3, [[33, 2]], "./outputs/testfiledump2")
 
 

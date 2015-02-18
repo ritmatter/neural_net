@@ -213,4 +213,3 @@ def restaurant_score(stars, review_count):
 
 class1 = 0
 class0 = 0
-load_data()

@@ -152,10 +152,7 @@ def load_data():
 
         data_entry = (attributes, restaurant_score(stars, review_count))
 
-        # Use the first 6800 results for taining data and the rest for test data
         data_matrix.append(data_entry)
-        #else:
-        #     test_data.append(data_entry)
         i += 1
 
     random.shuffle(data_matrix)
@@ -201,9 +198,8 @@ def get_attire(attire):
 def restaurant_score(stars, review_count):
     global class1
     global class0
-    score = 0.7 * stars + 0.3 * review_count
     val = np.zeros((2, 1))
-    if score > 18.5:
+    if stars >= 3.5 and review_count > 37:
         class1 += 1
         val[1] = 1
     else:

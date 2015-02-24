@@ -9,6 +9,11 @@ def feature_selection_count():
     db = client.new_yelp_data
     businesses = db.businesses
 
+    # print("Noize Level Average: " + str(db.businesses.aggregate({ "$match": { "categories": "Restaurants" }}, 
+    #    { "$group": { "_id": null, "avgNoiseLevel": { "$avg": "attributes.Noise Level" } })))
+    # print("Alcohol Average: " + str(db.businesses.aggregate({ "$match": { "categories": "Restaurants" }},
+    #    { "$group": { "_id": null, "avgAlcohol": { "$avg": "attributes.Alcohol" } })))
+
     attributes = [
        "attributes.Take-out",
        "attributes.Good For.dessert",

@@ -8,7 +8,7 @@ import math
 
 # Own class imports
 import network
-import new_yelp_loader
+import dummy_new_yelp_loader
 
 # Third party imports
 import numpy as np
@@ -22,9 +22,10 @@ would be a list of three network structures, with 1 hidden layer of 6, 4, and 2 
 filename is the filename of the csv file that is outputted at the end of this run. Do not put the 
 extention .csv - that is handled by the program.'''
 def holdout_validation(trialN, validation_network_layers, filename):
-    (training_data, test_data) = new_yelp_loader.load_data()
+    (training_data, test_data) = dummy_new_yelp_loader.load_data()
     random.shuffle(training_data)
-    test_size = math.floor(len(training_data)*0.2)
+    test_size = int(math.floor(len(training_data)*0.2))
+    print(str(test_size))
     holdout_data = training_data[0:test_size]
     partial_training_data = training_data[test_size + 1: len(training_data)]
 

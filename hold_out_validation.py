@@ -8,7 +8,7 @@ import math
 
 # Own class imports
 import network
-import new_yelp_loader
+import dummy_new_yelp_loader
 
 # Third party imports
 import numpy as np
@@ -22,9 +22,10 @@ would be a list of three network structures, with 1 hidden layer of 6, 4, and 2 
 filename is the filename of the csv file that is outputted at the end of this run. Do not put the 
 extention .csv - that is handled by the program.'''
 def holdout_validation(trialN, validation_network_layers, filename):
-    (training_data, test_data) = new_yelp_loader.load_data()
+    (training_data, test_data) = dummy_new_yelp_loader.load_data()
     random.shuffle(training_data)
-    test_size = math.floor(len(training_data)*0.2)
+    test_size = int(math.floor(len(training_data)*0.2))
+    print(str(test_size))
     holdout_data = training_data[0:test_size]
     partial_training_data = training_data[test_size + 1: len(training_data)]
 
@@ -84,7 +85,7 @@ def holdout_validation(trialN, validation_network_layers, filename):
 
 
 #holdout_validation(10, [[33, 30, 2], [33, 29, 2], [33, 28, 2], [33, 27, 2], [33, 26, 2], [33, 25, 2], [33, 24, 2], [33, 23, 2], [33, 22, 2], [33, 21, 2], [33, 20, 2], [33, 19, 2], [33, 18, 2], [33, 17, 2], [33, 16, 2], [33, 15, 2],[33, 14, 2], [33, 13, 2], [33, 12, 2], [33, 11, 2], [33, 10, 2], [33, 9, 2], [33, 8, 2], [33, 7, 2], [33, 6, 2], [33, 5, 2], [33, 4, 2], [33, 3, 2], [33, 2, 2], [33, 1, 2], [33, 2]], "validation_test_4_with_avg")
-#holdout_validation(10, [[33, 6, 2], [33, 4, 2], [33, 2, 2]], "testfiledump")
-holdout_validation(3, [[33, 2]], "./outputs/testfiledump2")
+holdout_validation(10, [[34, 6, 2], [34, 4, 2], [34, 2, 2]], "testfiledump")
+#holdout_validation(3, [[33, 2]], "./outputs/testfiledump2")
 
 

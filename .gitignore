@@ -54,3 +54,6 @@ docs/_build/
 # PyBuilder
 target/
 *.swp
+
+# Pycharm stuff
+*.idea

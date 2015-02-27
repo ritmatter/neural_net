@@ -76,8 +76,8 @@ class Network():
             if not n_test == 0:
                 test_evaluate = self.evaluate(test_data)
                 train_evaluate = self.evaluate(training_data)
-                test_percent_error[j + 1] = (n_test - test_evaluate) / n_test * 100
-                train_percent_error[j + 1] = (n - train_evaluate) / n * 100
+                test_percent_error[j + 1] = (n_test - test_evaluate) / float(n_test) * 100
+                train_percent_error[j + 1] = (n - train_evaluate) / float(n) * 100
                 print("Epoch {0} {1}: {2} / {3}".format(j, "test correct", test_evaluate, n_test))
                 print("Epoch {0} {1}: {2} / {3}".format(j, "train correct", train_evaluate, n))
             else:

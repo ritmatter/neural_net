@@ -44,6 +44,7 @@ def holdout_validation(trialN, validation_network_layers, filename):
             net = network.Network(network_layer)
             # TODO make the SGD parameters variable as well?
             results = net.SGD(partial_training_data, 20, 10, 3.0, holdout_data)
+            print(results)
             performance_training[p].append(results[1])
             performance_testing[p].append(results[0])
             p += 1
@@ -72,6 +73,7 @@ def holdout_validation(trialN, validation_network_layers, filename):
         final_performance_testing_real.append(np.mean(performance_testing_real[q]))
 
     # create a csv file to plot progress and results
+    print(final_performance_training)
     csv_name = filename + ".csv"
     with open(csv_name,"w+") as csvf:
         out = csv.writer(csvf, delimiter=',', quoting=csv.QUOTE_ALL)
@@ -85,14 +87,23 @@ def holdout_validation(trialN, validation_network_layers, filename):
 
 
 #holdout_validation(10, [[33, 30, 2], [33, 29, 2], [33, 28, 2], [33, 27, 2], [33, 26, 2], [33, 25, 2], [33, 24, 2], [33, 23, 2], [33, 22, 2], [33, 21, 2], [33, 20, 2], [33, 19, 2], [33, 18, 2], [33, 17, 2], [33, 16, 2], [33, 15, 2],[33, 14, 2], [33, 13, 2], [33, 12, 2], [33, 11, 2], [33, 10, 2], [33, 9, 2], [33, 8, 2], [33, 7, 2], [33, 6, 2], [33, 5, 2], [33, 4, 2], [33, 3, 2], [33, 2, 2], [33, 1, 2], [33, 2]], "holdout_validation_1_hidden")
-holdout_validation(10, [[33, 6, 2], [33, 4, 2], [33, 2, 2]], "testfiledump")
+#holdout_validation(10, [[33, 6, 2], [33, 4, 2], [33, 2, 2]], "testfiledump")
 #holdout_validation(3, [[33, 2]], "./outputs/testfiledump2")
-#holdout_validation(10, 
-[[34, 30, 30, 2], [34, 30, 25, 2], [34, 30, 20, 2], [34, 30, 15, 2], [34, 30, 10, 2], [34, 30, 5, 2], 
-[34, 25, 30, 2], [34, 25, 25, 2], [34, 25, 20, 2], [34, 25, 15, 2], [34, 25, 10, 2], [34, 25, 5, 2], 
-[34, 20, 30, 2], [34, 20, 25, 2], [34, 20, 20, 2], [34, 20, 15, 2], [34, 20, 10, 2], [34, 20, 5, 2], 
-[34, 15, 30, 2], [34, 15, 25, 2], [34, 15, 20, 2], [34, 15, 15, 2], [34, 15, 10, 2], [34, 15, 5, 2],
-[34, 10, 30, 2], [34, 10, 25, 2], [34, 10, 20, 2], [34, 10, 15, 2], [34, 10, 10, 2], [34, 10, 5, 2],
-[34, 5, 30, 2], [34, 5, 25, 2], [34, 5, 20, 2], [34, 5, 15, 2], [34, 5, 10, 2], [34, 5, 5, 2]]
 
+holdout_validation(10, [[34, 30, 30, 2], [34, 30, 25, 2], [34, 30, 20, 2], [34, 30, 15, 2], [34, 30, 10, 2], [34, 30, 5, 2]], "holdout_validation_2_hidden_30")
+time.sleep(300)
 
+holdout_validation(10, [[34, 25, 30, 2], [34, 25, 25, 2], [34, 25, 20, 2], [34, 25, 15, 2], [34, 25, 10, 2], [34, 25, 5, 2]], "holdout_validation_2_hidden_25")
+time.sleep(300)
+
+holdout_validation(10, [[34, 20, 30, 2], [34, 20, 25, 2], [34, 20, 20, 2], [34, 20, 15, 2], [34, 20, 10, 2], [34, 20, 5, 2]], "holdout_validation_2_hidden_20")
+time.sleep(300)
+
+holdout_validation(10, [[34, 15, 30, 2], [34, 15, 25, 2], [34, 15, 20, 2], [34, 15, 15, 2], [34, 15, 10, 2], [34, 15, 5, 2]], "holdout_validation_2_hidden_15")
+time.sleep(300)
+
+holdout_validation(10, [[34, 10, 30, 2], [34, 10, 25, 2], [34, 10, 20, 2], [34, 10, 15, 2], [34, 10, 10, 2], [34, 10, 5, 2]], "holdout_validation_2_hidden_10")
+time.sleep(300)
+
+holdout_validation(10, [[34, 5, 30, 2], [34, 5, 25, 2], [34, 5, 20, 2], [34, 5, 15, 2], [34, 5, 10, 2], [34, 5, 5, 2]], "holdout_validation_2_hidden_5")
+time.sleep(300)

@@ -17,10 +17,11 @@ import numpy as np
 
 def load_data():
 
-    TEST_SIZE = 2000
+    TEST_SIZE = 3000
     # Connect to mongo
-    client = MongoClient('localhost', 27017)
+    client = MongoClient('ds049181.mongolab.com', 49181)
     db = client.new_yelp_data
+    db.authenticate("naho", "naho")
     businesses = db.businesses
 
     restaurants = businesses.find({ "$and": [

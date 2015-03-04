@@ -7,9 +7,9 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.cross_validation import train_test_split
 from sklearn.cross_validation import cross_val_score
 from sklearn import metrics, datasets
-import dummy_new_yelp_loader_log_reg
+import baseline_yelp_loader
 
-(training_data, test_data, training_labels, testing_labels) = dummy_new_yelp_loader_log_reg.load_data()
+(training_data, test_data, training_labels, testing_labels) = baseline_yelp_loader.load_data()
 h = .02  # step size in the mesh
 
 # evaluate the model by splitting into train and test sets

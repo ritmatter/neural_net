@@ -2,12 +2,12 @@ from __future__ import print_function
 import numpy as np
 from sklearn import svm
 from sklearn import metrics, datasets
-import dummy_new_yelp_loader_log_reg
+import baseline_yelp_loader
 import decimal
 
 __author__ = 'jasonfeng'
 
-(training_data, test_data, training_labels, testing_labels) = dummy_new_yelp_loader_log_reg.load_data()
+(training_data, test_data, training_labels, testing_labels) = baseline_yelp_loader.load_data()
 
 h = .02  # step size in the mesh
 

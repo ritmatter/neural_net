@@ -18,7 +18,7 @@ logreg = logreg.fit(training_data, training_labels)
 
 # Training error
 score = (logreg.score(training_data, training_labels))
-print score;
+print "Training error: " + str(score);
 
 # predict class labels for the test set
 predictions = (logreg.predict(test_data))
@@ -28,5 +28,5 @@ probs = logreg.predict_proba(test_data)
 
 # generate evaluation metrics
 test_error =  metrics.accuracy_score(testing_labels, predictions)
-print test_error;
-print metrics.roc_auc_score(testing_labels, probs[:, 1])
+print "Test error: " + str(test_error);
+# print metrics.roc_auc_score(testing_labels, probs[:, 1])

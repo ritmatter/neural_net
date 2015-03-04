@@ -55,8 +55,11 @@ def load_data():
     # Waiter Service
 
     data_matrix = []
+    label_matrix = []
     training_data = []
     test_data = []
+    training_labels = []
+    testing_labels = []
     i = 0
     for restaurant in restaurants:
 
@@ -112,7 +115,7 @@ def load_data():
         stars = restaurant["stars"]
         review_count = restaurant["review_count"]
 
-        attributes = np.array([[
+        attributes = [
           take_out,
           good_for_dessert,
           good_for_lunch,
@@ -147,23 +150,32 @@ def load_data():
           good_for_kids,
           good_for_groups,
           price_range,
-        ]])
+        ]
         attributes = np.transpose(attributes)
 
-        data_entry = (attributes, restaurant_score(stars, review_count))
+        # data_matrix.append(attributes)
+        # label_matrix.append(restaurant_score(stars, review_count));
 
-        data_matrix.append(data_entry)
+        if i < TEST_SIZE:
+            training_data.append(attributes)
+            training_labels.append(restaurant_score(stars, review_count))
+        else:
+            test_data.append(attributes)
+            testing_labels.append(restaurant_score(stars, review_count))
         i += 1
 
-    random.shuffle(data_matrix)
-    test_data = data_matrix[0:TEST_SIZE]
-    training_data = data_matrix[TEST_SIZE + 1: len(data_matrix)]
+    # random.shuffle(data_matrix)
+    # test_data = data_matrix[0:TEST_SIZE]
+    # training_data = data_matrix[TEST_SIZE + 1: len(data_matrix)]
+    # testing_labels = label_matrix[0:TEST_SIZE]
+    # training_labels = label_matrix[TEST_SIZE + 1: len(label_matrix)]
 
-    print("Class 1 count is:")
-    print(class1)
-    print("Class 0 count is:")
-    print(class0)
-    return (training_data, test_data)
+    # test_data = np.array(test_data)
+    # training_data = np.array(training_data)
+    testing_labels = np.array(testing_labels)
+    training_labels = np.array(training_labels)
+
+    return (training_data, test_data, training_labels, testing_labels)
 
 # Returns given attribute
 # 0.5 if not present, dummy variable
@@ -281,13 +293,13 @@ def get_attire(attire):
 def restaurant_score(stars, review_count):
     global class1
     global class0
-    val = np.zeros((2, 1))
+    val = 0;
     if stars >= 3.5 and review_count > 37:
         class1 += 1
-        val[1] = 1
+        val = 1
     else:
         class0 += 1
-        val[0] = 1
+        val = 0
     return val
 
 class1 = 0

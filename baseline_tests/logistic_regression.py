@@ -29,7 +29,12 @@ probs = logreg.predict_proba(test_data)
 test_error =  metrics.accuracy_score(testing_labels, predictions)
 # print metrics.roc_auc_score(testing_labels, probs[:, 1])
 
+data = np.concatenate((training_data,test_data),axis=0)
+labels = np.concatenate((training_labels,testing_labels),axis=0)
+scores = cross_val_score(logreg, data, labels, scoring='accuracy', cv=10)
+
 f = open('logreg_results','w')
 f.write("Training error: " + str(score) + '\n')
 f.write("Test error: " + str(test_error) + '\n')
+f.write("Mean Cross validation error: " + str(scores.mean()) + '\n')
 f.close()

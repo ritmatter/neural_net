@@ -1,7 +1,7 @@
 from __future__ import print_function
-import new_yelp_loader
+import loader_all_features
 import network
 
-(training_data, test_data) = new_yelp_loader.load_data()
-net = network.Network([33, 5, 2])
-net.SGD(training_data, 50, 10, 3.0, test_data)
+(training_data, test_data) = loader_all_features.load_data()
+net = network.Network([35, 25, 25, 2])
+net.SGD(training_data, 20, 10, 0.5, test_data)

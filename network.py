@@ -67,6 +67,8 @@ class Network():
         train_percent_error[0] = "Training Error"
 
         for j in range(epochs):
+            if j % 5 == 0:
+                eta = eta/2
             random.shuffle(training_data)
             mini_batches = [
                 training_data[k:k+mini_batch_size]

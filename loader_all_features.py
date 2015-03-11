@@ -4,6 +4,9 @@
 # This loader will produce the smallest number of restaurants
 # Currently uses 37 features
 
+import random
+import math
+
 # Third-party libraries
 from pymongo import MongoClient
 import numpy as np
@@ -57,6 +60,7 @@ def load_data():
     ] });
 
     print("Found " + str(restaurants.count()) + " Restaurants.")
+    data_matrix = []
     training_data = []
     test_data = []
     i = 0
@@ -147,13 +151,12 @@ def load_data():
         attributes = np.transpose(attributes)
 
         data_entry = (attributes, restaurant_score(stars, review_count))
-
-        # Use the first 6800 results for taining data and the rest for test data
-        if i < 6800:
-            training_data.append(data_entry)
-        else:
-            test_data.append(data_entry)
+        data_matrix.append(data_entry)
         i += 1
+    test_size = int(math.floor(len(data_matrix)*0.2))
+    random.shuffle(data_matrix)
+    test_data = data_matrix[0:test_size]
+    training_data = data_matrix[test_size + 1: len(data_matrix)]
 
     test_data = np.array(test_data)
     training_data = np.array(training_data)

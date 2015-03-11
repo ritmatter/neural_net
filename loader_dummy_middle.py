@@ -7,6 +7,7 @@
 
 # Standard libraries
 import random
+import math
 
 # Third-party libraries
 from pymongo import MongoClient
@@ -14,7 +15,6 @@ import numpy as np
 
 def load_data():
 
-    TEST_SIZE = 3000
     print("Initializing loader for middle-value dummy variables")
     print("Connecting to database...")
     # Connect to mongo
@@ -204,8 +204,9 @@ def load_data():
         i += 1
 
     random.shuffle(data_matrix)
-    test_data = data_matrix[0:TEST_SIZE]
-    training_data = data_matrix[TEST_SIZE + 1: len(data_matrix)]
+    test_size = int(math.floor(len(data_matrix)*0.2))
+    test_data = data_matrix[0:test_size]
+    training_data = data_matrix[test_size + 1: len(data_matrix)]
 
     print("Class 1 count is:")
     print(class1)

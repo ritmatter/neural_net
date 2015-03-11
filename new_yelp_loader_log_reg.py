@@ -1,4 +1,12 @@
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
+"""
+mnist_loader
+~~~~~~~~~~~~
+A library to load the MNIST image data.  For details of the data
+structures that are returned, see the doc strings for ``load_data``
+and ``load_data_wrapper``.    In practice, ``load_data_wrapper`` is the
+function usually called by our neural network code.
+"""
 
 # Standard libraries
 import random
@@ -9,11 +17,10 @@ import numpy as np
 
 def load_data():
 
-    TEST_SIZE = 3000
+    TEST_SIZE = 2000
     # Connect to mongo
-    client = MongoClient('ds049181.mongolab.com', 49181)
+    client = MongoClient('localhost', 27017)
     db = client.new_yelp_data
-    db.authenticate("naho", "naho")
     businesses = db.businesses
 
     restaurants = businesses.find({ "$and": [
@@ -49,6 +56,8 @@ def load_data():
     data_matrix = []
     training_data = []
     test_data = []
+    training_labels = []
+    testing_labels = []
     i = 0
     for restaurant in restaurants:
 
@@ -60,21 +69,18 @@ def load_data():
         good_for_dinner = 1 if restaurant["attributes"]["Good For"]["dinner"] else 0
         good_for_breakfast = 1 if restaurant["attributes"]["Good For"]["breakfast"] else 0
         good_for_brunch = 1 if restaurant["attributes"]["Good For"]["brunch"] else 0
+        noise_level = get_noise_level(restaurant["attributes"]["Noise Level"])
 
-        # Potential dummy variable for noise level
-        noise_level = get_noise_level(restaurant["attributes"])
-
-        # Potential dummy variables for all of Ambience
-        (ambience_romantic,
+        (ambience_romatic,
          ambience_intimate,
          ambience_touristy,
-         ambience_hipster,
+         ambience_hipter,
          ambience_divey,
          ambience_classy,
          ambience_trendy,
          ambience_upscale,
          ambience_casual,
-        ) = get_ambience_fields(restaurant["attributes"])
+        ) = getAmbienceFields(restaurants["attributes"]["Ambience"])
 
         parking_garage = 1 if restaurant["attributes"]["Parking"]["garage"] else 0
         parking_street = 1 if restaurant["attributes"]["Parking"]["street"] else 0
@@ -82,18 +88,13 @@ def load_data():
         parking_validated = 1 if restaurant["attributes"]["Parking"]["validated"] else 0
         parking_valet = 1 if restaurant["attributes"]["Parking"]["valet"] else 0
 
-        # Potential dummy variables
-        has_TV = get_feature(restaurant["attributes"], 'Has TV')
-        waiter_service = get_feature(restaurant["attributes"], 'Waiter Service')
-        takes_reservations = get_feature(restaurant["attributes"], 'Takes Reservations')
-        delivery = get_feature(restaurant["attributes"], 'Delivery')
-
-        # Custom dummy variable for alcohol
-        (alcohol, no_alcohol) = get_alcohol(restaurant["attributes"])
-
+        takes_reservations = 1 if restaurant["attributes"]["Takes Reservations"] else 0
+        delivery = 1 if restaurant["attributes"]["Delivery"] else 0
+        has_TV = 1 if restaurant["attributes"]["Has TV"] else 0
         outdoor_seating = 1 if restaurant["attributes"]["Outdoor Seating"] else 0
         attire = get_attire(restaurant["attributes"]["Attire"])
-
+        alcohol = get_alcohol(restaurant["attributes"]["Alcohol"])
+        waiter_service = 1 if restaurant["attributes"]["Waiter Service"] else 0
         accepts_credit_cards = 1 if restaurant["attributes"]["Accepts Credit Cards"] else 0
         good_for_kids = 1 if restaurant["attributes"]["Good for Kids"] else 0
         good_for_groups = 1 if restaurant["attributes"]["Good For Groups"] else 0
@@ -104,7 +105,7 @@ def load_data():
         stars = restaurant["stars"]
         review_count = restaurant["review_count"]
 
-        attributes = np.array([[
+        attributes = np.array([
           take_out,
           good_for_dessert,
           good_for_lunch,
@@ -133,13 +134,12 @@ def load_data():
           outdoor_seating,
           attire,
           alcohol,
-          no_alcohol,
           waiter_service,
           accepts_credit_cards,
           good_for_kids,
           good_for_groups,
           price_range,
-        ]])
+        ])
         attributes = np.transpose(attributes)
 
         data_entry = (attributes, restaurant_score(stars, review_count))
@@ -151,29 +151,47 @@ def load_data():
     test_data = data_matrix[0:TEST_SIZE]
     training_data = data_matrix[TEST_SIZE + 1: len(data_matrix)]
 
-    print("Class 1 count is:")
-    print(class1)
-    print("Class 0 count is:")
-    print(class0)
-    return (training_data, test_data)
+    if i < 6800:
+        training_data.append(attributes)
+        training_labels.append(restaurant_score(stars, review_count))
+    else:
+        test_data.append(attributes)
+        testing_labels.append(restaurant_score(stars, review_count))
+    i += 1
 
-# Returns given attribute
-# 0.5 if not present, dummy variable
-def get_feature(attributes, name):
-    if name not in attributes:
-        return 0.5
+    random.shuffle(data_matrix)
+    test_data = data_matrix[0:TEST_SIZE]
+    training_data = data_matrix[TEST_SIZE + 1: len(data_matrix)]
 
-    if attributes[name]:
-        return 1
-    return 0
+    test_data = np.array(test_data)
+    training_data = np.array(training_data)
 
-# Returns noise level
-# 2.5 if not present, dummy variable
-def get_noise_level(attributes):
-    if 'Noise Level' not in attributes:
-        return 2.5
+    return (training_data, test_data, training_labels, testing_labels)
 
-    noise_level = attributes['Noise Level']
+
+# Returns ambience fields
+# These may be 0.5 if they do not exist for the given restaurant
+def get_ambience_fields(ambience):
+    if not ambience:
+        return (0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5)
+
+    print("See what happens when the field is not present")
+    print(ambience["romantic"])
+    print(not not ambience["romantic"])
+    print("")
+
+    ambience_romantic = 1 if restaurant["attributes"]["Ambience"]["romantic"] else 0
+    ambience_intimate = 1 if restaurant["attributes"]["Ambience"]["intimate"] else 0
+    ambience_touristy = 1 if restaurant["attributes"]["Ambience"]["touristy"] else 0
+    ambience_hipster = 1 if restaurant["attributes"]["Ambience"]["hipster"] else 0
+    ambience_divey = 1 if restaurant["attributes"]["Ambience"]["divey"] else 0
+    ambience_classy = 1 if restaurant["attributes"]["Ambience"]["classy"] else 0
+    ambience_trendy = 1 if restaurant["attributes"]["Ambience"]["trendy"] else 0
+    ambience_upscale = 1 if restaurant["attributes"]["Ambience"]["upscale"] else 0
+    ambience_casual = 1 if restaurant["attributes"]["Ambience"]["casual"] else 0
+
+# Returns noise level rating (average, quiet, loud, very_loud)
+def get_noise_level(noise_level):
     if noise_level == "average":
       return 0
     elif noise_level == "quiet":
@@ -183,82 +201,14 @@ def get_noise_level(attributes):
     elif noise_level == "very_loud":
       return 3
 
-# Returns ambience fields
-# These may be 0.5 if they do not exist for the given restaurant
-def get_ambience_fields(attributes):
-    if 'Ambience' not in attributes:
-        return (0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5)
-
-    ambience = attributes["Ambience"]
-    if 'romantic' in ambience:
-        ambience_romantic = 1 if ambience["romantic"] else 0
-    else:
-        ambience_romantic = 0.5
-
-    if 'intimate' in ambience:
-        ambience_intimate = 1 if ambience["intimate"] else 0
-    else:
-        ambience_intimate = 0.5
-
-    if 'touristy' in ambience:
-          ambience_touristy = 1 if ambience["touristy"] else 0
-    else:
-          ambience_touristy = 0.5
-
-    if 'hipster' in ambience:
-          ambience_hipster = 1 if ambience["hipster"] else 0
-    else:
-          ambience_hipster = 0.5
-
-    if 'divey' in ambience:
-          ambience_divey = 1 if ambience["divey"] else 0
-    else:
-          ambience_divey = 0.5
-
-    if 'trendy' in ambience:
-          ambience_trendy = 1 if ambience["trendy"] else 0
-    else:
-          ambience_trendy = 0.5
-
-    if 'classy' in ambience:
-          ambience_classy = 1 if ambience["classy"] else 0
-    else:
-          ambience_classy = 0.5
-
-    if 'upscale' in ambience:
-          ambience_upscale = 1 if ambience["upscale"] else 0
-    else:
-          ambience_upscale = 0.5
-
-    if 'casual' in ambience:
-          ambience_casual = 1 if ambience["casual"] else 0
-    else:
-          ambience_casual = 0.5
-
-    return (
-        ambience_romantic,
-        ambience_intimate,
-        ambience_touristy,
-        ambience_hipster,
-        ambience_divey,
-        ambience_classy,
-        ambience_trendy,
-        ambience_upscale,
-        ambience_casual,
-    )
-
 # Returns alcohol rating (none, full_bar, beer_and_wine)
-def get_alcohol(attributes):
-    if 'Alcohol' not in attributes:
-        return (2, 1)
-
-    alcohol = attributes['Alcohol']
+def get_alcohol(alcohol):
     if alcohol == "none":
-      return (0, 0)
+      return 0
     elif alcohol == "full_bar":
-      return (1, 0)
+      return 1
     elif alcohol == "beer_and_wine":
-      return (2, 0)
+      return 2
 
 # Returns attire rating (casual, dressy, formal)
 def get_attire(attire):
@@ -284,3 +234,4 @@ def restaurant_score(stars, review_count):
 
 class1 = 0
 class0 = 0
+

@@ -1,0 +1,128 @@
+MongoDB shell version: 2.6.3
+connecting to: ds049181.mongolab.com:49181/new_yelp_data
+Variety: A MongoDB Schema Analyzer
+Version 1.4.1, released 14 Oct 2014
+Using query of { "categories" : "Restaurants" }
+Using limit of 21892
+Using maxDepth of 99
+Using sort of { "_id" : -1 }
+Using outputFormat of ascii
+Using persistResults of false
+Using collection of businesses
++---------------------------------------------------------------------------------------------------+
+| key                                         | types          | occurrences | percents             |
+| ------------------------------------------- | -------------- | ----------- | -------------------- |
+| _id                                         | ObjectId       | 21892       | 100                  |
+| attributes                                  | Object         | 21892       | 100                  |
+| business_id                                 | String         | 21892       | 100                  |
+| categories                                  | Array          | 21892       | 100                  |
+| city                                        | String         | 21892       | 100                  |
+| full_address                                | String         | 21892       | 100                  |
+| hours                                       | Object         | 21892       | 100                  |
+| latitude                                    | Number         | 21892       | 100                  |
+| longitude                                   | Number         | 21892       | 100                  |
+| name                                        | String         | 21892       | 100                  |
+| neighborhoods                               | Array          | 21892       | 100                  |
+| open                                        | Boolean        | 21892       | 100                  |
+| review_count                                | Number         | 21892       | 100                  |
+| stars                                       | Number         | 21892       | 100                  |
+| state                                       | String         | 21892       | 100                  |
+| type                                        | String         | 21892       | 100                  |
+| attributes.Price Range                      | Number         | 20430       | 93.32176137401791    |
+| attributes.Accepts Credit Cards             | Boolean,Object | 20413       | 93.24410743650648    |
+| attributes.Good For Groups                  | Boolean        | 19893       | 90.86881052439247    |
+| attributes.Attire                           | String         | 19824       | 90.55362689566965    |
+| attributes.Take-out                         | Boolean        | 19769       | 90.30239356842682    |
+| attributes.Good for Kids                    | Boolean        | 19643       | 89.72684085510689    |
+| attributes.Outdoor Seating                  | Boolean        | 19370       | 88.47980997624703    |
+| attributes.Takes Reservations               | Boolean        | 19262       | 87.98647907911565    |
+| attributes.Delivery                         | Boolean        | 19173       | 87.57993787685       |
+| attributes.Good For                         | Object         | 18845       | 86.0816736707473     |
+| attributes.Good For.breakfast               | Boolean        | 18825       | 85.99031609720446    |
+| attributes.Good For.dinner                  | Boolean        | 18815       | 85.94463731043304    |
+| attributes.Good For.latenight               | Boolean        | 18815       | 85.94463731043304    |
+| attributes.Good For.lunch                   | Boolean        | 18815       | 85.94463731043304    |
+| attributes.Good For.brunch                  | Boolean        | 18765       | 85.71624337657592    |
+| attributes.Good For.dessert                 | Boolean        | 18757       | 85.67970034715879    |
+| attributes.Parking                          | Object         | 18685       | 85.35081308240453    |
+| attributes.Parking.garage                   | Boolean        | 18683       | 85.34167732505024    |
+| attributes.Parking.lot                      | Boolean        | 18681       | 85.33254156769596    |
+| attributes.Parking.street                   | Boolean        | 18681       | 85.33254156769596    |
+| attributes.Parking.valet                    | Boolean        | 18681       | 85.33254156769596    |
+| attributes.Parking.validated                | Boolean        | 18470       | 84.36871916681893    |
+| attributes.Waiter Service                   | Boolean        | 18404       | 84.06723917412754    |
+| attributes.Alcohol                          | String         | 18007       | 82.25379133930203    |
+| attributes.Has TV                           | Boolean        | 17274       | 78.9055362689567     |
+| attributes.Noise Level                      | String         | 16613       | 75.8861684633656     |
+| attributes.Ambience                         | Object         | 16591       | 75.78567513246848    |
+| attributes.Ambience.casual                  | Boolean        | 16578       | 75.72629270966563    |
+| attributes.Ambience.classy                  | Boolean        | 16578       | 75.72629270966563    |
+| attributes.Ambience.intimate                | Boolean        | 16578       | 75.72629270966563    |
+| attributes.Ambience.romantic                | Boolean        | 16578       | 75.72629270966563    |
+| attributes.Ambience.touristy                | Boolean        | 16578       | 75.72629270966563    |
+| attributes.Ambience.trendy                  | Boolean        | 16578       | 75.72629270966563    |
+| attributes.Ambience.upscale                 | Boolean        | 16468       | 75.22382605517997    |
+| attributes.Ambience.hipster                 | Boolean        | 16401       | 74.91777818381144    |
+| attributes.Ambience.divey                   | Boolean        | 15727       | 71.8390279554175     |
+| attributes.Wi-Fi                            | String         | 14118       | 64.4893111638955     |
+| hours.Friday                                | Object         | 13079       | 59.7432852183446     |
+| hours.Friday.close                          | String         | 13079       | 59.7432852183446     |
+| hours.Friday.open                           | String         | 13079       | 59.7432852183446     |
+| hours.Thursday                              | Object         | 13078       | 59.73871733966746    |
+| hours.Thursday.close                        | String         | 13078       | 59.73871733966746    |
+| hours.Thursday.open                         | String         | 13078       | 59.73871733966746    |
+| hours.Wednesday                             | Object         | 13033       | 59.533162799196056   |
+| hours.Wednesday.close                       | String         | 13033       | 59.533162799196056   |
+| hours.Wednesday.open                        | String         | 13033       | 59.533162799196056   |
+| hours.Tuesday                               | Object         | 12926       | 59.04439978074183    |
+| hours.Tuesday.close                         | String         | 12926       | 59.04439978074183    |
+| hours.Tuesday.open                          | String         | 12926       | 59.04439978074183    |
+| attributes.Caters                           | Boolean        | 12818       | 58.55106888361045    |
+| hours.Saturday                              | Object         | 12812       | 58.523661611547595   |
+| hours.Saturday.close                        | String         | 12812       | 58.523661611547595   |
+| hours.Saturday.open                         | String         | 12812       | 58.523661611547595   |
+| hours.Monday                                | Object         | 12300       | 56.184907728850725   |
+| hours.Monday.close                          | String         | 12300       | 56.184907728850725   |
+| hours.Monday.open                           | String         | 12300       | 56.184907728850725   |
+| hours.Sunday                                | Object         | 11324       | 51.7266581399598     |
+| hours.Sunday.close                          | String         | 11324       | 51.7266581399598     |
+| hours.Sunday.open                           | String         | 11324       | 51.7266581399598     |
+| attributes.Wheelchair Accessible            | Boolean        | 10732       | 49.02247396309154    |
+| attributes.Drive-Thru                       | Boolean        | 2553        | 11.661794262744381   |
+| attributes.Dogs Allowed                     | Boolean        | 2311        | 10.556367622875936   |
+| attributes.Good For Kids                    | Boolean        | 2194        | 10.021925817650283   |
+| attributes.Smoking                          | String         | 2125        | 9.706742188927462    |
+| attributes.Happy Hour                       | Boolean        | 1858        | 8.487118582130458    |
+| attributes.Coat Check                       | Boolean        | 1806        | 8.249588890919057    |
+| attributes.Music                            | Object         | 1800        | 8.222181618856203    |
+| attributes.Good For Dancing                 | Boolean        | 1784        | 8.149095560021927    |
+| attributes.Music.dj                         | Boolean        | 1547        | 7.066508313539193    |
+| attributes.BYOB/Corkage                     | String         | 1292        | 5.901699250867897    |
+| attributes.Music.jukebox                    | Boolean        | 1182        | 5.39923259638224     |
+| attributes.Music.live                       | Boolean        | 1179        | 5.385528960350813    |
+| attributes.Music.video                      | Boolean        | 1113        | 5.084048967659419    |
+| attributes.BYOB                             | Boolean        | 848         | 3.8735611182167      |
+| attributes.Music.karaoke                    | Boolean        | 771         | 3.5218344600767404   |
+| attributes.Music.background_music           | Boolean        | 762         | 3.4807235519824595   |
+| attributes.Corkage                          | Boolean        | 645         | 2.946281746756806    |
+| attributes.Order at Counter                 | Boolean        | 373         | 1.703818746574091    |
+| attributes.Open 24 Hours                    | Boolean        | 254         | 1.160241183994153    |
+| attributes.Dietary Restrictions             | Object         | 164         | 0.7491321030513429   |
+| attributes.Dietary Restrictions.dairy-free  | Boolean        | 164         | 0.7491321030513429   |
+| attributes.Dietary Restrictions.gluten-free | Boolean        | 164         | 0.7491321030513429   |
+| attributes.Dietary Restrictions.halal       | Boolean        | 164         | 0.7491321030513429   |
+| attributes.Dietary Restrictions.kosher      | Boolean        | 164         | 0.7491321030513429   |
+| attributes.Dietary Restrictions.soy-free    | Boolean        | 164         | 0.7491321030513429   |
+| attributes.Dietary Restrictions.vegan       | Boolean        | 164         | 0.7491321030513429   |
+| attributes.Dietary Restrictions.vegetarian  | Boolean        | 164         | 0.7491321030513429   |
+| attributes.Payment Types                    | Object         | 38          | 0.17357938973140874  |
+| attributes.Ages Allowed                     | String         | 25          | 0.11419696692855838  |
+| attributes.By Appointment Only              | Boolean        | 22          | 0.10049333089713137  |
+| attributes.Payment Types.amex               | Boolean        | 12          | 0.05481454412570802  |
+| attributes.Payment Types.cash_only          | Boolean        | 12          | 0.05481454412570802  |
+| attributes.Payment Types.discover           | Boolean        | 12          | 0.05481454412570802  |
+| attributes.Payment Types.mastercard         | Boolean        | 12          | 0.05481454412570802  |
+| attributes.Payment Types.visa               | Boolean        | 12          | 0.05481454412570802  |
+| attributes.Music.playlist                   | Boolean        | 2           | 0.00913575735428467  |
+| attributes.Accepts Insurance                | Boolean        | 1           | 0.004567878677142335 |
++---------------------------------------------------------------------------------------------------+

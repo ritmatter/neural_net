@@ -1,0 +1,3 @@
+Training error: 0.765
+Test error: 0.715065754057
+Mean Cross validation error: 0.744232958929

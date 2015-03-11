@@ -1,7 +1,7 @@
-# Loader Dummy Features Middle
+# Loader Dummy Features Average
 # This loader will get every restaurant in the dataset
 # For every feature that a restaurant does not have, a dummy variable will be provided
-# The dummy feature will simply hold the middle value of the feature
+# The dummy feature will hold the average value of the feature
 # This loader will dummy every single restaurant feature that is not present
 # Currently operates on 67 features
 
@@ -11,17 +11,23 @@ import random
 # Third-party libraries
 from pymongo import MongoClient
 import numpy as np
+import average_dummy_variables as averager
+
+feature_dict = {}
 
 def load_data():
-
+    global feature_dict
     TEST_SIZE = 3000
-    print("Initializing loader for middle-value dummy variables")
+    print("Initializing loader for average-value dummy variables")
     print("Connecting to database...")
     # Connect to mongo
     client = MongoClient('ds049181.mongolab.com', 49181)
     db = client.new_yelp_data
     db.authenticate("naho", "naho")
     businesses = db.businesses
+
+    # Get the dictionary of averages
+    feature_dict = averager.calculate_averages()
 
     # Query for every single restaurant
     restaurants = businesses.find({"categories": "Restaurants"});
@@ -216,8 +222,9 @@ def load_data():
 # Returns given attribute
 # 0.5 if not present, dummy variable
 def get_boolean_feature(attributes, name):
+    global feature_dict
     if name not in attributes:
-        return 0.5
+        return feature_dict[name]
 
     if attributes[name]:
         return 1
@@ -226,8 +233,9 @@ def get_boolean_feature(attributes, name):
 # Returns smoking allowed
 # 1.5 if not present, dummy variable
 def get_smoking(attributes):
+    global feature_dict
     if 'Smoking' not in attributes:
-        return 1
+        return feature_dict["Smoking"]
 
     smoking = attributes['Smoking']
     if smoking == "yes":
@@ -240,8 +248,9 @@ def get_smoking(attributes):
 # Returns wifi allowed
 # 1.5 if not present, dummy variable
 def get_wifi(attributes):
+    global feature_dict
     if 'Wi-Fi' not in attributes:
-        return 1
+        return feature_dict["Wi-Fi"]
 
     wifi = attributes['Wi-Fi']
     if wifi == "no":
@@ -254,8 +263,9 @@ def get_wifi(attributes):
 # Returns ages allowed
 # 1.5 if not present, dummy variable
 def get_ages_allowed(attributes):
+    global feature_dict
     if 'Ages Allowed' not in attributes:
-        return 1.5
+        return feature_dict["Ages Allowed"]
 
     ages_allowed = attributes['Ages Allowed']
     if ages_allowed == "18plus":
@@ -270,15 +280,17 @@ def get_ages_allowed(attributes):
 # Returns price range
 # 2.5 if not present, dummy variable
 def get_price_range(attributes):
+    global feature_dict
     if 'Price' not in attributes:
-        return 2.5
+        return feature_dict["Price Range"]
     return attributes["Price Range"]
 
 # Returns noise level
 # 1.5 if not present, dummy variable
 def get_noise_level(attributes):
+    global feature_dict
     if 'Noise Level' not in attributes:
-        return 1.5
+        return feature_dict["Noise Level"]
 
     noise_level = attributes['Noise Level']
     if noise_level == "average":
@@ -293,84 +305,100 @@ def get_noise_level(attributes):
 # Returns music fields
 # Values may be 0.5 if they do not exist for the given restaurant
 def get_music_fields(attributes):
+    global feature_dict
     if 'Music' not in attributes:
-      return (0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5)
+        return (
+         feature_dict["Music.dj"],
+         feature_dict["Music.jukebox"],
+         feature_dict["Music.live"],
+         feature_dict["Music.video"],
+         feature_dict["Music.karaoke"],
+         feature_dict["Music.background_music"],
+         feature_dict["Music.playlist"],
+        )
 
     music = attributes["Music"]
     if 'playlist' in attributes:
       playlist = 1 if music["playlist"] else 0
     else:
-      playlist = 0.5
+      playlist = feature_dict["Music.playlist"]
 
     if 'jukebox' in attributes:
       jukebox = 1 if music["jukebox"] else 0
     else:
-      jukebox = 0.5
+      jukebox = feature_dict["Music.jukebox"]
 
     if 'live' in attributes:
       live = 1 if music["live"] else 0
     else:
-      live = 0.5
+      live = feature_dict["Music.live"]
 
     if 'dj' in attributes:
       dj = 1 if music["dj"] else 0
     else:
-      dj = 0.5
+      dj = feature_dict["Music.dj"]
 
     if 'video' in attributes:
       video = 1 if music["video"] else 0
     else:
-      video = 0.5
+      video = feature_dict["Music.video"]
 
     if 'karaoke' in attributes:
       karaoke = 1 if music["karaoke"] else 0
     else:
-      karaoke = 0.5
+      karaoke = feature_dict["Music.karaoke"]
 
     if 'background_music' in attributes:
       background_music = 1 if music["background_music"] else 0
     else:
-      background_music = 0.5
+      background_music = feature_dict["Music.background_music"]
 
     return (dj,
-            live,
-            jukebox,
-            video,
-            karaoke,
-            background_music,
-            playlist)
+           live,
+           jukebox,
+           video,
+           karaoke,
+           background_music,
+           playlist)
 
 # returns payment_type fields
 # these may be 0.5 if they do not exist for the given restaurant
 def get_payment_type_fields(attributes):
-    if 'Payment Type' not in attributes:
-        return (0.5, 0.5, 0.5, 0.5, 0.5)
+    global feature_dict
+    if 'Payment Types' not in attributes:
+        return(
+          feature_dict["Payment Types.amex"],
+          feature_dict["Payment Types.cash_only"],
+          feature_dict["Payment Types.discover"],
+          feature_dict["Payment Types.mastercard"],
+          feature_dict["Payment Types.visa"],
+        )
 
-    payment_type = attributes["payment_type"]
+    payment_type = attributes["Payment Types"]
     if 'amex' in payment_type:
         payment_type_amex = 1 if payment_type["amex"] else 0
     else:
-        payment_type_amex = 0.5
+        payment_type_amex = feature_dict["Payment Types.amex"]
 
     if 'cash_only' in payment_type:
         payment_type_cash_only = 1 if payment_type["cash_only"] else 0
     else:
-        payment_type_cash_only = 0.5
+        payment_type_cash_only = feature_dict["Payment Types.cash_only"]
 
     if 'discover' in payment_type:
-          payment_type_discover = 1 if payment_type["discover"] else 0
+        payment_type_discover = 1 if payment_type["discover"] else 0
     else:
-          payment_type_discover = 0.5
+        payment_type_discover = feature_dict["Payment Types.discover"]
 
     if 'mastercard' in payment_type:
-          payment_type_mastercard = 1 if payment_type["mastercard"] else 0
+        payment_type_mastercard = 1 if payment_type["mastercard"] else 0
     else:
-          payment_type_mastercard = 0.5
+        payment_type_mastercard = feature_dict["Payment Types.mastercard"]
 
     if 'visa' in payment_type:
-          payment_type_visa = 1 if payment_type["visa"] else 0
+        payment_type_visa = 1 if payment_type["visa"] else 0
     else:
-          payment_type_visa = 0.5
+        payment_type_visa = feature_dict["Payment Types.visa"]
 
     return (
         payment_type_amex,
@@ -383,44 +411,53 @@ def get_payment_type_fields(attributes):
 # returns dietary_restrictions fields
 # these may be 0.5 if they do not exist for the given restaurant
 def get_dietary_restrictions(attributes):
+    global feature_dict
     if 'Dietary Restrictions' not in attributes:
-        return (0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5)
+        return(
+          feature_dict["Dietary Restrictions.dairy-free"],
+          feature_dict["Dietary Restrictions.gluten-free"],
+          feature_dict["Dietary Restrictions.halal"],
+          feature_dict["Dietary Restrictions.kosher"],
+          feature_dict["Dietary Restrictions.soy-free"],
+          feature_dict["Dietary Restrictions.vegan"],
+          feature_dict["Dietary Restrictions.vegetarian"],
+        )
 
     dietary_restrictions = attributes["Dietary Restrictions"]
     if 'dairy_free' in dietary_restrictions:
-        dietary_restrictions_dairy_free = 1 if dietary_restrictions["dairy_free"] else 0
+        dietary_restrictions_dairy_free = 1 if dietary_restrictions["dairy-free"] else 0
     else:
-        dietary_restrictions_dairy_free = 0.5
+        dietary_restrictions_dairy_free = feature_dict["Dietary Restrictions.dairy-free"]
 
     if 'gluten_free' in dietary_restrictions:
-        dietary_restrictions_gluten_free = 1 if dietary_restrictions["gluten_free"] else 0
+        dietary_restrictions_gluten_free = 1 if dietary_restrictions["gluten-free"] else 0
     else:
-        dietary_restrictions_gluten_free = 0.5
+        dietary_restrictions_gluten_free = feature_dict["Dietary Restrictions.gluten-free"]
 
     if 'halal' in dietary_restrictions:
-          dietary_restrictions_halal = 1 if dietary_restrictions["halal"] else 0
+        dietary_restrictions_halal = 1 if dietary_restrictions["halal"] else 0
     else:
-          dietary_restrictions_halal = 0.5
+        dietary_restrictions_halal = feature_dict["Dietary Restrictions.halal"]
 
     if 'kosher' in dietary_restrictions:
-          dietary_restrictions_kosher = 1 if dietary_restrictions["kosher"] else 0
+        dietary_restrictions_kosher = 1 if dietary_restrictions["kosher"] else 0
     else:
-          dietary_restrictions_kosher = 0.5
+        dietary_restrictions_kosher = feature_dict["Dietary Restrictions.kosher"]
 
     if 'soy_free' in dietary_restrictions:
-          dietary_restrictions_soy_free = 1 if dietary_restrictions["soy-free"] else 0
+        dietary_restrictions_soy_free = 1 if dietary_restrictions["soy-free"] else 0
     else:
-          dietary_restrictions_soy_free = 0.5
+        dietary_restrictions_soy_free = feature_dict["Dietary Restrictions.soy-free"]
 
     if 'vegan' in dietary_restrictions:
-          dietary_restrictions_vegan = 1 if dietary_restrictions["vegan"] else 0
+        dietary_restrictions_vegan = 1 if dietary_restrictions["vegan"] else 0
     else:
-          dietary_restrictions_vegan = 0.5
+        dietary_restrictions_vegan = feature_dict["Dietary Restrictions.vegan"]
 
     if 'vegetarian' in dietary_restrictions:
-          dietary_restrictions_vegetarian = 1 if dietary_restrictions["vegetarian"] else 0
+        dietary_restrictions_vegetarian = 1 if dietary_restrictions["vegetarian"] else 0
     else:
-          dietary_restrictions_vegetarian = 0.5
+        dietary_restrictions_vegetarian = feature_dict["Dietary Restrictions.vegetarian"]
 
     return (
         dietary_restrictions_dairy_free,
@@ -435,34 +472,41 @@ def get_dietary_restrictions(attributes):
 # returns parking fields
 # these may be 0.5 if they do not exist for the given restaurant
 def get_parking_fields(attributes):
+    global feature_dict
     if 'Parking' not in attributes:
-        return (0.5, 0.5, 0.5, 0.5, 0.5)
+        return (
+          feature_dict["Parking.valet"],
+          feature_dict["Parking.garage"],
+          feature_dict["Parking.street"],
+          feature_dict["Parking.lot"],
+          feature_dict["Parking.validated"],
+        )
 
     parking = attributes["Parking"]
     if 'valet' in parking:
         parking_valet = 1 if parking["valet"] else 0
     else:
-        parking_valet = 0.5
+        parking_valet = feature_dict["Parking.valet"]
 
     if 'garage' in parking:
         parking_garage = 1 if parking["garage"] else 0
     else:
-        parking_garage = 0.5
+        parking_garage = feature_dict["Parking.garage"]
 
     if 'street' in parking:
-          parking_street = 1 if parking["street"] else 0
+        parking_street = 1 if parking["street"] else 0
     else:
-          parking_street = 0.5
+        parking_street = feature_dict["Parking.street"]
 
     if 'lot' in parking:
-          parking_lot = 1 if parking["lot"] else 0
+        parking_lot = 1 if parking["lot"] else 0
     else:
-          parking_lot = 0.5
+        parking_lot = feature_dict["Parking.lot"]
 
     if 'validated' in parking:
-          parking_validated = 1 if parking["validated"] else 0
+        parking_validated = 1 if parking["validated"] else 0
     else:
-          parking_validated = 0.5
+        parking_validated = feature_dict["Parking.validated"]
 
     return (
         parking_valet,
@@ -475,39 +519,47 @@ def get_parking_fields(attributes):
 # Returns good for fields
 # These may be 0.5 if they do not exist for the given restaurant
 def get_good_for_fields(attributes):
+    global feature_dict
     if 'Good For' not in attributes:
-        return (0.5, 0.5, 0.5, 0.5, 0.5, 0.5)
+        return (
+          feature_dict["Good For.dessert"],
+          feature_dict["Good For.breakfast"],
+          feature_dict["Good For.brunch"],
+          feature_dict["Good For.lunch"],
+          feature_dict["Good For.dinner"],
+          feature_dict["Good For.latenight"],
+        )
 
     good_for = attributes["Good For"]
     if 'dessert' in good_for:
         good_for_dessert = 1 if good_for["dessert"] else 0
     else:
-        good_for_dessert = 0.5
+        good_for_dessert = feature_dict["Good For.dessert"]
 
     if 'breakfast' in good_for:
         good_for_breakfast = 1 if good_for["breakfast"] else 0
     else:
-        good_for_breakfast = 0.5
+        good_for_breakfast = feature_dict["Good For.breakfast"]
 
     if 'brunch' in good_for:
-          good_for_brunch = 1 if good_for["brunch"] else 0
+        good_for_brunch = 1 if good_for["brunch"] else 0
     else:
-          good_for_brunch = 0.5
+        good_for_brunch = feature_dict["Good For.brunch"]
 
     if 'lunch' in good_for:
-          good_for_lunch = 1 if good_for["lunch"] else 0
+        good_for_lunch = 1 if good_for["lunch"] else 0
     else:
-          good_for_lunch = 0.5
+        good_for_lunch = feature_dict["Good For.lunch"]
 
     if 'dinner' in good_for:
-          good_for_dinner = 1 if good_for["dinner"] else 0
+        good_for_dinner = 1 if good_for["dinner"] else 0
     else:
-          good_for_dinner = 0.5
+        good_for_dinner = feature_dict["Good For.dinner"]
 
     if 'latenight' in good_for:
-          good_for_latenight = 1 if good_for["latenight"] else 0
+        good_for_latenight = 1 if good_for["latenight"] else 0
     else:
-          good_for_latenight = 0.5
+        good_for_latenight = feature_dict["Good For.latenight"]
 
     return (
         good_for_dessert,
@@ -521,54 +573,65 @@ def get_good_for_fields(attributes):
 # Returns ambience fields
 # These may be 0.5 if they do not exist for the given restaurant
 def get_ambience_fields(attributes):
+    global feature_dict
     if 'Ambience' not in attributes:
-        return (0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5)
+        return(
+          feature_dict["Ambience.romantic"],
+          feature_dict["Ambience.intimate"],
+          feature_dict["Ambience.touristy"],
+          feature_dict["Ambience.hipster"],
+          feature_dict["Ambience.divey"],
+          feature_dict["Ambience.classy"],
+          feature_dict["Ambience.trendy"],
+          feature_dict["Ambience.upscale"],
+          feature_dict["Ambience.casual"],
+        )
 
     ambience = attributes["Ambience"]
     if 'romantic' in ambience:
         ambience_romantic = 1 if ambience["romantic"] else 0
     else:
-        ambience_romantic = 0.5
+        ambience_romantic = feature_dict["Ambience.romantic"]
 
     if 'intimate' in ambience:
         ambience_intimate = 1 if ambience["intimate"] else 0
     else:
-        ambience_intimate = 0.5
+        ambience_intimate = feature_dict["Ambience.intimate"]
 
     if 'touristy' in ambience:
-          ambience_touristy = 1 if ambience["touristy"] else 0
+        ambience_touristy = 1 if ambience["touristy"] else 0
     else:
-          ambience_touristy = 0.5
+        ambience_touristy = feature_dict["Ambience.touristy"]
 
     if 'hipster' in ambience:
-          ambience_hipster = 1 if ambience["hipster"] else 0
+        ambience_hipster = 1 if ambience["hipster"] else 0
     else:
-          ambience_hipster = 0.5
+        ambience_hipster = feature_dict["Ambience.hipster"]
 
     if 'divey' in ambience:
-          ambience_divey = 1 if ambience["divey"] else 0
+        ambience_divey = 1 if ambience["divey"] else 0
     else:
-          ambience_divey = 0.5
+        ambience_divey = feature_dict["Ambience.divey"]
 
     if 'trendy' in ambience:
-          ambience_trendy = 1 if ambience["trendy"] else 0
+        ambience_trendy = 1 if ambience["trendy"] else 0
     else:
-          ambience_trendy = 0.5
+        ambience_trendy = feature_dict["Ambience.trendy"]
 
     if 'classy' in ambience:
-          ambience_classy = 1 if ambience["classy"] else 0
+        ambience_classy = 1 if ambience["classy"] else 0
     else:
-          ambience_classy = 0.5
+        ambience_classy = feature_dict["Ambience.classy"]
 
     if 'upscale' in ambience:
-          ambience_upscale = 1 if ambience["upscale"] else 0
+        ambience_upscale = 1 if ambience["upscale"] else 0
     else:
-          ambience_upscale = 0.5
+        ambience_upscale = feature_dict["Ambience.upscale"]
 
     if 'casual' in ambience:
-          ambience_casual = 1 if ambience["casual"] else 0
+        ambience_casual = 1 if ambience["casual"] else 0
     else:
-          ambience_casual = 0.5
+        ambience_casual = feature_dict["Ambience.casual"]
 
     return (
         ambience_romantic,
@@ -585,8 +648,9 @@ def get_ambience_fields(attributes):
 # Returns alcohol rating (none, full_bar, beer_and_wine)
 # Returns 1 if alcohol is not a present feature
 def get_alcohol(attributes):
+    global feature_dict
     if 'Alcohol' not in attributes:
-        return 1
+        return feature_dict["Alcohol"]
 
     alcohol = attributes['Alcohol']
     if alcohol == "none":
@@ -598,8 +662,10 @@ def get_alcohol(attributes):
 
 # Returns attire rating (casual, dressy, formal)
 def get_attire(attributes):
+    global feature_dict
     if 'Attire' not in attributes:
-        return 1
+        return feature_dict["Attire"]
+
     attire = attributes['Attire']
 
     if attire == "casual":
@@ -624,4 +690,3 @@ def restaurant_score(stars, review_count):
 
 class1 = 0
 class0 = 0
-

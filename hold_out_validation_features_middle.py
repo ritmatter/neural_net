@@ -44,7 +44,7 @@ def holdout_validation(trialN, validation_network_layers, filename):
             print("Performing " + str(j) + "th holdout validation for network " + ' '.join(map(str, network_layer)))
             net = network.Network(network_layer)
             # TODO make the SGD parameters variable as well?
-            results = net.SGD(partial_training_data, 20, 10, 3.0, holdout_data)
+            results = net.SGD(partial_training_data, 25, 10, 0.5, holdout_data)
             print(results)
             performance_training[p].append(results[1])
             performance_testing[p].append(results[0])
@@ -63,7 +63,7 @@ def holdout_validation(trialN, validation_network_layers, filename):
         for t in range(trialN):
             print("Performing " + str(t) + "th real trial for network " + ' '.join(map(str, network_layer)))
             net = network.Network(network_layer)
-            results_actual = net.SGD(training_data, 20, 10, 3.0, test_data)
+            results_actual = net.SGD(training_data, 25, 10, 0.5, test_data)
             performance_training_real[u].append(results_actual[1])
             performance_testing_real[u].append(results_actual[0])
         u += 1
@@ -115,7 +115,14 @@ def formatErrors(trialN, error_array):
 
 
 
-#holdout_validation(10, [[68, 30, 2], [68, 29, 2], [68, 28, 2], [68, 27, 2], [68, 26, 2], [68, 25, 2], [68, 24, 2], [68, 23, 2], [68, 22, 2], [68, 21, 2], [68, 20, 2], [68, 19, 2], [68, 18, 2], [68, 17, 2], [68, 16, 2], [68, 15, 2],[68, 14, 2], [68, 13, 2], [68, 12, 2], [68, 11, 2], [68, 10, 2], [68, 9, 2], [68, 8, 2], [68, 7, 2], [68, 6, 2], [68, 5, 2], [68, 4, 2], [68, 3, 2], [68, 2, 2], [68, 1, 2], [68, 2]], "holdout_validation_1_hidden_with_all_avg_dummy_middle")
+#holdout_validation(5, [[68, 30, 2], [68, 29, 2], [68, 28, 2], [68, 27, 2], [68, 26, 2], [68, 25, 2], [68, 24, 2], [68, 23, 2], [68, 22, 2], [68, 21, 2], [68, 20, 2]], "holdout_validation_1_hidden_with_all_avg_dummy_middle_epoch_correct_30-20")
+
+
+#holdout_validation(5, [[68, 19, 2], [68, 18, 2], [68, 17, 2], [68, 16, 2], [68, 15, 2],[68, 14, 2], [68, 13, 2], [68, 12, 2], [68, 11, 2], [68, 10, 2]], "holdout_validation_1_hidden_with_all_avg_dummy_middle_epoch_correct_20-10")
+
+#holdout_validation(5, [[68, 9, 2], [68, 8, 2], [68, 7, 2], [68, 6, 2], [68, 5, 2], [68, 4, 2], [68, 3, 2], [68, 2, 2], [68, 1, 2], [68, 2]], "holdout_validation_1_hidden_with_all_avg_dummy_middle_epoch_correct_10-0")
+
+
 #holdout_validation(10, [[68, 6, 2], [68, 4, 2], [68, 2, 2]], "./outputs/testfiledump")
 #holdout_validation(3, [[34, 2]], "./outputs/testfiledump2")
 
@@ -146,21 +153,21 @@ def formatErrors(trialN, error_array):
 #holdout_validation(10, [[34, 23, 30, 2], [34, 23, 25, 2], [34, 23, 20, 2], [34, 23, 15, 2], [34, 23, 10, 2], [34, 23, 5, 2]], "holdout_validation_2_hidden_23")
 #time.sleep(300)
 
-#holdout_validation(10, [[68, 30, 30, 2], [68, 30, 25, 2], [68, 30, 20, 2], [68, 30, 15, 2], [68, 30, 10, 2], [68, 30, 5, 2]], "holdout_validation_2_hidden_30_with_avg_dummy_middle")
+#holdout_validation(5, [[68, 30, 30, 2], [68, 30, 25, 2], [68, 30, 20, 2], [68, 30, 15, 2], [68, 30, 10, 2], [68, 30, 5, 2]], "holdout_validation_2_hidden_30_with_avg_dummy_middle_epoch_correct")
 
-#holdout_validation(10, [[68, 20, 30, 2], [68, 20, 25, 2], [68, 20, 20, 2], [68, 20, 15, 2], [68, 20, 10, 2], [68, 20, 5, 2]], "holdout_validation_2_hidden_20_with_avg_dummy_middle")
-#time.sleep(300)
+#holdout_validation(5, [[68, 20, 30, 2], [68, 20, 25, 2], [68, 20, 20, 2], [68, 20, 15, 2], [68, 20, 10, 2], [68, 20, 5, 2]], "holdout_validation_2_hidden_20_with_avg_dummy_middle_epoch_correct")
+#time.sle_epoch_correctep(300)
 
-#holdout_validation(10, [[68, 25, 30, 2], [68, 25, 25, 2], [68, 25, 20, 2], [68, 25, 15, 2], [68, 25, 10, 2], [68, 25, 5, 2]], "holdout_validation_2_hidden_25_with_avg_dummy_middle")
+#holdout_validation(5, [[68, 25, 30, 2], [68, 25, 25, 2], [68, 25, 20, 2], [68, 25, 15, 2], [68, 25, 10, 2], [68, 25, 5, 2]], "holdout_validation_2_hidden_25_with_avg_dummy_middle_epoch_correct")
 
-#holdout_validation(10, [[68, 15, 30, 2], [68, 15, 25, 2], [68, 15, 20, 2], [68, 15, 15, 2], [68, 15, 10, 2], [68, 15, 5, 2]], "holdout_validation_2_hidden_15_with_avg_dummy_middle")
-#time.sleep(300)
+#holdout_validation(5, [[68, 15, 30, 2], [68, 15, 25, 2], [68, 15, 20, 2], [68, 15, 15, 2], [68, 15, 10, 2], [68, 15, 5, 2]], "holdout_validation_2_hidden_15_with_avg_dummy_middle_epoch_correct")
+#time.sle_epoch_correctep(300)
 
-#holdout_validation(10, [[68, 10, 30, 2], [68, 10, 25, 2], [68, 10, 20, 2], [68, 10, 15, 2], [68, 10, 10, 2], [68, 10, 5, 2]], "holdout_validation_2_hidden_10_with_avg_dummy_middle")
-#time.sleep(300)
+#holdout_validation(5, [[68, 10, 30, 2], [68, 10, 25, 2], [68, 10, 20, 2], [68, 10, 15, 2], [68, 10, 10, 2], [68, 10, 5, 2]], "holdout_validation_2_hidden_10_with_avg_dummy_middle_epoch_correct")
+#time.sle_epoch_correctep(300)
 
-holdout_validation(10, [[68, 5, 30, 2], [68, 5, 25, 2], [68, 5, 20, 2], [68, 5, 15, 2], [68, 5, 10, 2], [68, 5, 5, 2]], "holdout_validation_2_hidden_5_with_avg_dummy_middle")
-#time.sleep(300)
+holdout_validation(5, [[68, 5, 30, 2], [68, 5, 25, 2], [68, 5, 20, 2], [68, 5, 15, 2], [68, 5, 10, 2], [68, 5, 5, 2]], "holdout_validation_2_hidden_5_with_avg_dummy_middle_epoch_correct")
+#time.sle_epoch_correctep(300)
 
 #holdout_validation(10, [[34, 30, 30, 30, 2], [34, 30, 25, 20, 2], [34, 30, 20, 15, 2], [34, 30, 15, 10, 2], [34, 30, 10, 5, 2]], "holdout_validation_3_hidden_30_with_avg")
 #time.sleep(300)

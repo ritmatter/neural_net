@@ -161,6 +161,11 @@ def load_data():
     test_data = np.array(test_data)
     training_data = np.array(training_data)
 
+    print("Class 1 count is:")
+    print(class1)
+    print("Class 0 count is:")
+    print(class0)
+
     return (training_data, test_data)
 
 # Returns noise level rating (average, quiet, loud, very_loud)

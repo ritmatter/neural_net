@@ -118,15 +118,15 @@ def formatErrors(trialN, error_array):
 #holdout_validation(10, [[34, 30, 2], [34, 29, 2], [34, 28, 2], [34, 27, 2], [34, 26, 2], [34, 25, 2], [34, 24, 2], [34, 23, 2], [34, 22, 2], [34, 21, 2], [34, 20, 2], [34, 19, 2], [34, 18, 2], [34, 17, 2], [34, 16, 2], [34, 15, 2],[34, 14, 2], [34, 13, 2], [34, 12, 2], [34, 11, 2], [34, 10, 2], [34, 9, 2], [34, 8, 2], [34, 7, 2], [34, 6, 2], [34, 5, 2], [34, 4, 2], [34, 3, 2], [34, 2, 2], [34, 1, 2], [34, 2]], "holdout_validation_1_hidden_with_all_avg")
 
 
-holdout_validation(5, [[34, 30, 2], [34, 29, 2], [34, 28, 2], [34, 27, 2], [34, 26, 2], [34, 25, 2], [34, 24, 2], [34, 23, 2], [34, 22, 2], [34, 21, 2]], "holdout_validation_1_hidden_with_all_avg_30-20")
+#holdout_validation(5, [[34, 30, 2], [34, 29, 2], [34, 28, 2], [34, 27, 2], [34, 26, 2], [34, 25, 2], [34, 24, 2], [34, 23, 2], [34, 22, 2], [34, 21, 2]], "holdout_validation_1_hidden_with_all_avg_30-20")
 
 
-holdout_validation(5, [[34, 20, 2], [34, 19, 2], [34, 18, 2], [34, 17, 2], [34, 16, 2], [34, 15, 2],[34, 14, 2], [34, 13, 2], [34, 12, 2], [34, 11, 2]], "holdout_validation_1_hidden_with_all_avg_20-10")
+#holdout_validation(5, [[34, 20, 2], [34, 19, 2], [34, 18, 2], [34, 17, 2], [34, 16, 2], [34, 15, 2],[34, 14, 2], [34, 13, 2], [34, 12, 2], [34, 11, 2]], "holdout_validation_1_hidden_with_all_avg_20-10")
 
-holdout_validation(5, [[34, 10, 2], [34, 9, 2], [34, 8, 2], [34, 7, 2], [34, 6, 2], [34, 5, 2], [34, 4, 2], [34, 3, 2], [34, 2, 2], [34, 1, 2], [34, 2]], "holdout_validation_1_hidden_with_all_avg_10-0")
+#holdout_validation(5, [[34, 10, 2], [34, 9, 2], [34, 8, 2], [34, 7, 2], [34, 6, 2], [34, 5, 2], [34, 4, 2], [34, 3, 2], [34, 2, 2], [34, 1, 2], [34, 2]], "holdout_validation_1_hidden_with_all_avg_10-0")
 
 
-#holdout_validation(10, [[34, 6, 2], [34, 4, 2], [34, 2, 2]], "./outputs/testfiledump")
+#holdout_validation(3, [[34, 30, 25, 2], [34, 30, 30, 2]], "testfiledump")
 #holdout_validation(3, [[34, 2]], "./outputs/testfiledump2")
 
 #holdout_validation(10, [[34, 30, 30, 2], [34, 30, 25, 2], [34, 30, 20, 2], [34, 30, 15, 2], [34, 30, 10, 2], [34, 30, 5, 2]], "holdout_validation_2_hidden_30")
@@ -156,29 +156,29 @@ holdout_validation(5, [[34, 10, 2], [34, 9, 2], [34, 8, 2], [34, 7, 2], [34, 6, 
 #holdout_validation(10, [[34, 23, 30, 2], [34, 23, 25, 2], [34, 23, 20, 2], [34, 23, 15, 2], [34, 23, 10, 2], [34, 23, 5, 2]], "holdout_validation_2_hidden_23")
 #time.sleep(300)
 
-#holdout_validation(5, [[34, 30, 30, 2], [34, 30, 25, 2], [34, 30, 20, 2], [34, 30, 15, 2], [34, 30, 10, 2], [34, 30, 5, 2]], "holdout_validation_2_hidden_30_with_avg")
+#holdout_validation(5, [[34, 30, 30, 2], [34, 30, 25, 2], [34, 30, 20, 2], [34, 30, 15, 2], [34, 30, 10, 2], [34, 30, 5, 2]], "holdout_validation_2_hidden_30_with_avg_epoch_correct")
 
-#holdout_validation(5, [[34, 20, 30, 2], [34, 20, 25, 2], [34, 20, 20, 2], [34, 20, 15, 2], [34, 20, 10, 2], [34, 20, 5, 2]], "holdout_validation_2_hidden_20_with_avg")
+#holdout_validation(5, [[34, 20, 30, 2], [34, 20, 25, 2], [34, 20, 20, 2], [34, 20, 15, 2], [34, 20, 10, 2], [34, 20, 5, 2]], "holdout_validation_2_hidden_20_with_avg_epoch_correct")
 #time.sleep(300)
 
-#holdout_validation(5, [[34, 25, 30, 2], [34, 25, 25, 2], [34, 25, 20, 2], [34, 25, 15, 2], [34, 25, 10, 2], [34, 25, 5, 2]], "holdout_validation_2_hidden_25_with_avg")
+#holdout_validation(5, [[34, 25, 30, 2], [34, 25, 25, 2], [34, 25, 20, 2], [34, 25, 15, 2], [34, 25, 10, 2], [34, 25, 5, 2]], "holdout_validation_2_hidden_25_with_avg_epoch_correct")
 
-#holdout_validation(5, [[34, 15, 30, 2], [34, 15, 25, 2], [34, 15, 20, 2], [34, 15, 15, 2], [34, 15, 10, 2], [34, 15, 5, 2]], "holdout_validation_2_hidden_15_with_avg")
+#holdout_validation(5, [[34, 15, 30, 2], [34, 15, 25, 2], [34, 15, 20, 2], [34, 15, 15, 2], [34, 15, 10, 2], [34, 15, 5, 2]], "holdout_validation_2_hidden_15_with_avg_epoch_correct")
 #time.sleep(300)
 
-#holdout_validation(5, [[34, 10, 30, 2], [34, 10, 25, 2], [34, 10, 20, 2], [34, 10, 15, 2], [34, 10, 10, 2], [34, 10, 5, 2]], "holdout_validation_2_hidden_10_with_avg")
+#holdout_validation(5, [[34, 10, 30, 2], [34, 10, 25, 2], [34, 10, 20, 2], [34, 10, 15, 2], [34, 10, 10, 2], [34, 10, 5, 2]], "holdout_validation_2_hidden_10_with_avg_epoch_correct")
 #time.sleep(300)
 
-holdout_validation(5, [[34, 5, 30, 2], [34, 5, 25, 2], [34, 5, 20, 2], [34, 5, 15, 2], [34, 5, 10, 2], [34, 5, 5, 2]], "holdout_validation_2_hidden_5_with_avg")
+#holdout_validation(5, [[34, 5, 30, 2], [34, 5, 25, 2], [34, 5, 20, 2], [34, 5, 15, 2], [34, 5, 10, 2], [34, 5, 5, 2]], "holdout_validation_2_hidden_5_with_avg_epoch_correct")
 #time.sleep(300)
 
-#holdout_validation(5, [[34, 30, 30, 30, 2], [34, 30, 25, 20, 2], [34, 30, 20, 15, 2], [34, 30, 15, 10, 2], [34, 30, 10, 5, 2]], "holdout_validation_3_hidden_30_with_avg")
+#holdout_validation(5, [[34, 30, 30, 30, 2], [34, 30, 25, 20, 2], [34, 30, 20, 15, 2], [34, 30, 15, 10, 2], [34, 30, 10, 5, 2]], "holdout_validation_3_hidden_30_with_avg_epoch_correct")
 #time.sleep(300)
 
-#holdout_validation(5, [[34, 25, 30, 30, 2], [34, 25, 25, 20, 2], [34, 25, 20, 15, 2], [34, 25, 15, 10, 2], [34, 25, 10, 5, 2]], "holdout_validation_3_hidden_25_with_avg")
+#holdout_validation(5, [[34, 25, 30, 30, 2], [34, 25, 25, 20, 2], [34, 25, 20, 15, 2], [34, 25, 15, 10, 2], [34, 25, 10, 5, 2]], "holdout_validation_3_hidden_25_with_avg_epoch_correct")
 #time.sleep(300)
 
-#holdout_validation(5, [[34, 20, 30, 30, 2], [34, 20, 25, 20, 2], [34, 20, 20, 15, 2], [34, 20, 15, 10, 2], [34, 20, 10, 5, 2]], "holdout_validation_3_hidden_20_with_avg")
+#holdout_validation(5, [[34, 20, 30, 30, 2], [34, 20, 25, 20, 2], [34, 20, 20, 15, 2], [34, 20, 15, 10, 2], [34, 20, 10, 5, 2]], "holdout_validation_3_hidden_20_with_avg_epoch_correct")
 
 #holdout_validation(10, [[34, 10, 30, 2], [34, 10, 29, 2], [34, 10, 28, 2], [34, 10, 27, 2], [34, 10, 26, 2], [34, 10, 25, 2], [34, 10, 24, 2], [34, 10, 23, 2], [34, 10, 22, 2], [34, 10, 21, 2], [34, 10, 20, 2]], "holdout_validation_2_hidden_10_30-20_with_avg")
 

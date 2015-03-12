@@ -116,7 +116,7 @@ def formatErrors(trialN, error_array):
 
 
 #holdout_validation(10, [[35, 30, 2], [35, 29, 2], [35, 28, 2], [35, 27, 2], [35, 26, 2], [35, 25, 2], [35, 24, 2], [35, 23, 2], [35, 22, 2], [35, 21, 2], [35, 20, 2], [35, 19, 2], [35, 18, 2], [35, 17, 2], [35, 16, 2], [35, 15, 2],[35, 14, 2], [35, 13, 2], [35, 12, 2], [35, 11, 2], [35, 10, 2], [35, 9, 2], [35, 8, 2], [35, 7, 2], [35, 6, 2], [35, 5, 2], [35, 4, 2], [35, 3, 2], [35, 2, 2], [35, 1, 2], [35, 2]], "holdout_validation_1_hidden_with_all_avg_loader_all")
-#holdout_validation(10, [[37, 6, 2], [37, 4, 2], [37, 2, 2]], "./outputs/testfiledump")
+holdout_validation(5, [[35, 6, 2], [35, 4, 2], [35, 2, 2]], "testfiledump")
 #holdout_validation(3, [[34, 2]], "./outputs/testfiledump2")
 
 #holdout_validation(10, [[34, 30, 30, 2], [34, 30, 25, 2], [34, 30, 20, 2], [34, 30, 15, 2], [34, 30, 10, 2], [34, 30, 5, 2]], "holdout_validation_2_hidden_30")
@@ -159,7 +159,7 @@ def formatErrors(trialN, error_array):
 #holdout_validation(10, [[35, 10, 30, 2], [35, 10, 25, 2], [35, 10, 20, 2], [35, 10, 15, 2], [35, 10, 10, 2], [35, 10, 5, 2]], "holdout_validation_2_hidden_10_with_avg_loader_all")
 #time.sleep(300)
 
-holdout_validation(10, [[35, 5, 30, 2], [35, 5, 25, 2], [35, 5, 20, 2], [35, 5, 15, 2], [35, 5, 10, 2], [35, 5, 5, 2]], "holdout_validation_2_hidden_5_with_avg_loader_all")
+#holdout_validation(10, [[35, 5, 30, 2], [35, 5, 25, 2], [35, 5, 20, 2], [35, 5, 15, 2], [35, 5, 10, 2], [35, 5, 5, 2]], "holdout_validation_2_hidden_5_with_avg_loader_all")
 #time.sleep(300)
 
 #holdout_validation(10, [[34, 30, 30, 30, 2], [34, 30, 25, 20, 2], [34, 30, 20, 15, 2], [34, 30, 15, 10, 2], [34, 30, 10, 5, 2]], "holdout_validation_3_hidden_30_with_avg")

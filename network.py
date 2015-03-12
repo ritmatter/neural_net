@@ -69,6 +69,7 @@ class Network():
         for j in range(epochs):
             if j % 5 == 0:
                 eta = eta/2
+                print("eta is: " + str(eta))
             random.shuffle(training_data)
             mini_batches = [
                 training_data[k:k+mini_batch_size]

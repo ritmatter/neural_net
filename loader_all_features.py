@@ -158,8 +158,10 @@ def load_data():
     test_data = data_matrix[0:test_size]
     training_data = data_matrix[test_size + 1: len(data_matrix)]
 
-    test_data = np.array(test_data)
-    training_data = np.array(training_data)
+    print("Class 1 count is:")
+    print(class1)
+    print("Class 0 count is:")
+    print(class0)
 
     return (training_data, test_data)
 

@@ -1,3 +1,6 @@
-Training error: 0.755280292203
-Test error: 0.757
-Mean Cross validation error: 0.755424643161
+Dummy Variables Avg Training error: 0.754274522259
+Dummy Variables Avg Test error: 0.763666666667
+Dummy Variables Avg Mean Cross validation error: 0.755607322624
+Dummy Variables Mid Training error: 0.755039113801
+Dummy Variables Mid Test error: 0.757651895843
+Dummy Variables Mid Mean Cross validation error: 0.755561671201

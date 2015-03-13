@@ -1,0 +1,12 @@
+Mid Classifer training error: 0.755096214241
+Mid Classifer test error: 0.75719506624
+Mid Linear training error C = 0.1: 0.755096214241
+Mid Linear test error C = 0.1: 0.75719506624
+Mid Linear training error C = 1: 0.755096214241
+Mid Linear test error C = 1: 0.75719506624
+Mid Linear training error C = 10: 0.755096214241
+Mid Linear test error C = 10: 0.75719506624
+Mid Linear training error C = 100: 0.755096214241
+Mid Linear test error C = 100: 0.75719506624
+Mid Poly training error: 0.755096214241
+Mid Poly test error: 0.75719506624

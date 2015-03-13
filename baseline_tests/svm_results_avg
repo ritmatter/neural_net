@@ -1,0 +1,12 @@
+Avg Classifer training error: 0.754168651739
+Avg Classifer test error: 0.764333333333
+Avg Linear training error C = 0.1: 0.754168651739
+Avg Linear test error C = 0.1: 0.764333333333
+Avg Linear training error C = 1: 0.754168651739
+Avg Linear test error C = 1: 0.764333333333
+Avg Linear training error C = 10: 0.754221586999
+Avg Linear test error C = 10: 0.764333333333
+Avg Linear training error C = 100: 0.754221586999
+Avg Linear test error C = 100: 0.764333333333
+Avg Poly training error: 0.754168651739
+Avg Poly test error: 0.764333333333

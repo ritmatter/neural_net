@@ -1,12 +1,2 @@
-Classifer training error: 0.769
-Classifer test error: 0.725447973545
-Linear training error C = 0.1: 0.765666666667
-Linear test error C = 0.1: 0.725447973545
-Linear training error C = 1: 0.765666666667
-Linear test error C = 1: 0.725447973545
-Linear training error C = 10: 0.777666666667
-Linear test error C = 10: 0.725447973545
-Linear training error C = 100: 0.778
-Linear test error C = 100: 0.725447973545
-Poly training error: 0.756
-Poly test error: 0.712604783511
+Avg Classifer training error: 0.755756709544
+Avg Classifer test error: 0.754

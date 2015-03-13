@@ -1,0 +1,6 @@
+Mid Classifer training error: 0.755667218638
+Mid Classifer test error: 0.754910918228
+Mid Linear training error C = 0.1: 0.755667218638
+Mid Linear test error C = 0.1: 0.754910918228
+Mid Linear training error C = 1: 0.755667218638
+Mid Linear test error C = 1: 0.754910918228

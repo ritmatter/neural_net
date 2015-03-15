@@ -21,8 +21,7 @@ h = .02  # step size in the mesh
 
 # evaluate the model by splitting into train and test sets
 logreg_all = LogisticRegression()
-
-logreg_all = logreg_all.fit(all_training_data, all_testing_labels)
+logreg_all = logreg_all.fit(all_training_data, all_training_labels)
 
 # Training error
 all_score = (logreg_all.score(all_training_data, all_training_labels))

@@ -28,7 +28,7 @@ logreg_all = LogisticRegression()
 
 logreg_avg = logreg_avg.fit(avg_training_data, avg_training_labels)
 logreg_mid = logreg_mid.fit(mid_training_data, mid_training_labels)
-logreg_all = logreg_all.fit(all_training_data, all_testing_labels)
+logreg_all = logreg_all.fit(all_training_data, all_training_labels)
 
 # Training error
 avg_score = (logreg_avg.score(avg_training_data, avg_training_labels))

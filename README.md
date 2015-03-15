@@ -54,8 +54,13 @@ Note: If you are having difficulties, make sure you have created an outputs dire
 ## Baseline tests
 The baseline_tests directory contains baseline tests run on common models. We used SVM and Logistic Regression to benchmark the Neural Network.
 
-To run the baseline tests:
+#### To run the baseline tests with dummy variables:
 SVM: python ./baseline_tests/svm.py
 Logistic Regression: python ./baseline_tests/logistic_regression.py
+Results will be placed in svm_results_avg, svm_results_mid, and logreg_results
 
-Results for the baseline tests can be seen in logreg_results and svm_results_avg as well as svm_results_mid
+#### To run the baseline tests with only restaurants containing all features:
+SVM: python ./baseline_tests/svm_all.py
+Logistic Regression: python ./baseline_tests/logistic_regression_all.py
+Results will be placed in svm_results_all and logreg_results_all_features
+

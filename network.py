@@ -7,6 +7,11 @@ algorithm for a feedforward neural network.  Gradients are calculated
 using backpropagation.  Note that I have focused on making the code
 simple, easily readable, and easily modifiable.  It is not optimized,
 and omits many desirable features.
+
+Many portions of this code came from the online book, Neural Networks and Deep Learning, by Michael Nielson
+https://github.com/mnielsen/neural-networks-and-deep-learning
+
+New portions created by the team have been annotated
 """
 
 #### Libraries
@@ -20,6 +25,7 @@ import numpy as np
 
 class Network():
 
+    # External Software
     def __init__(self, sizes):
         """The list ``sizes`` contains the number of neurons in the
         respective layers of the network.  For example, if the list
@@ -38,12 +44,14 @@ class Network():
         self.weights = [np.random.randn(y, x)
                         for x, y in zip(sizes[:-1], sizes[1:])]
 
+    # External Software
     def feedforward(self, a):
         """Return the output of the network if ``a`` is input."""
         for b, w in zip(self.biases, self.weights):
             a = sigmoid_vec(np.dot(w, a)+b)
         return a
 
+    # External Software
     def SGD(self, training_data, epochs, mini_batch_size, eta,
             test_data=None):
         """Train the neural network using mini-batch stochastic
@@ -68,8 +76,12 @@ class Network():
 
         for j in range(epochs):
             if j % 5 == 0:
+
+                # We decay the learning rate over the epochs
+                # Team creation
                 eta = eta/2
                 print("eta is: " + str(eta))
+
             random.shuffle(training_data)
             mini_batches = [
                 training_data[k:k+mini_batch_size]
@@ -87,6 +99,7 @@ class Network():
                 print("Epoch {0} complete".format(j))
 
         # create a csv file to plot progress and results
+        # Team creation
         csv_name = "./outputs/" + '_'.join(map(str, self.sizes)) + ".csv"
         with open(csv_name,"w+") as csvf:
             out = csv.writer(csvf, delimiter=',', quoting=csv.QUOTE_ALL)
@@ -97,6 +110,7 @@ class Network():
             out.writerow(train_percent_error)
         return [test_percent_error[-1], train_percent_error[-1]]
 
+    # External Software
     def update_mini_batch(self, mini_batch, eta):
         """Update the network's weights and biases by applying
         gradient descent using backpropagation to a single mini batch.
@@ -113,6 +127,7 @@ class Network():
         self.biases = [b-(eta/len(mini_batch))*nb
                        for b, nb in zip(self.biases, nabla_b)]
 
+    # External Software
     def backprop(self, x, y):
 
         """Return a tuple ``(nabla_b, nabla_w)`` representing the
@@ -152,22 +167,26 @@ class Network():
             nabla_w[-l] = np.dot(delta, activations[-l-1].transpose())
         return (nabla_b, nabla_w)
 
+    # External Software
     def evaluate(self, test_data):
         test_results = [(np.argmax(self.feedforward(x)), np.argmax(y)) for (x, y) in test_data]
         return sum(int(x == y) for (x, y) in test_results)
-    
+
+    # External Software
     def cost_derivative(self, output_activations, y):
         """Return the vector of partial derivatives \partial C_x /
         \partial a for the output activations."""
         return (output_activations-y)
 
 #### Miscellaneous functions
+# External Software
 def sigmoid(z):
     """The sigmoid function."""
     return 1.0/(1.0+np.exp(-z))
 
 sigmoid_vec = np.vectorize(sigmoid)
 
+# External Software
 def sigmoid_prime(z):
     """Derivative of the sigmoid function."""
     return sigmoid(z)*(1-sigmoid(z))

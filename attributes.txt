@@ -1,3 +1,7 @@
+# The output of using varietyJS to determine all of the possible fields for a restaurant
+# Command used: mongo ds049181.mongolab.com:49181/new_yelp_data -u naho -p naho --eval "var collection='businesses', query= {'categories': 'Restaurants' }" variety.js
+# This output was used to determine all of the possible features
+
 MongoDB shell version: 2.6.3
 connecting to: ds049181.mongolab.com:49181/new_yelp_data
 Variety: A MongoDB Schema Analyzer

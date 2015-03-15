@@ -11,7 +11,7 @@ import decimal
 
 __author__ = 'jasonfeng'
 
-(all_training_data, all_test_data, all_training_labels, all_testing_labels) = import baseline_loader_all.load_data()
+(all_training_data, all_test_data, all_training_labels, all_testing_labels) = baseline_loader_all.load_data()
 
 print("All Features Classifier Started")
 all_classifer = svm.SVC(probability=True)

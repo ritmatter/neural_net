@@ -20,16 +20,14 @@ We have many different variations of feature sets that allow for experimentation
 Check out attributes.txt for a comprehensive list of possible features
 A small snippet of that file shows the attribute, percent of restaurants for which it appears, primitive type, etc:
 
-+---------------------------------------------------------------------------------------------------+
 | key                                         | types          | occurrences | percents             |
-| ------------------------------------------- | -------------- | ----------- | -------------------- |
+|---------------------------------------------|:---------------|:------------|:---------------------|
 | attributes.Good For Groups                  | Boolean        | 19893       | 90.86881052439247    |
 | attributes.Attire                           | String         | 19824       | 90.55362689566965    |
 | attributes.Take-out                         | Boolean        | 19769       | 90.30239356842682    |
 | attributes.Good for Kids                    | Boolean        | 19643       | 89.72684085510689    |
 | attributes.Outdoor Seating                  | Boolean        | 19370       | 88.47980997624703    |
 | attributes.Takes Reservations               | Boolean        | 19262       | 87.98647907911565    |
-+---------------------------------------------------------------------------------------------------+
 
 ## Loaders:
 We use a variety of loaders to get restaurant data in different forms. These loaders experiment with various forms of dummy variables

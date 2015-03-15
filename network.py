@@ -7,6 +7,11 @@ algorithm for a feedforward neural network.  Gradients are calculated
 using backpropagation.  Note that I have focused on making the code
 simple, easily readable, and easily modifiable.  It is not optimized,
 and omits many desirable features.
+
+Many portions of this code came from the online book, Neural Networks and Deep Learning, by Michael Nielson
+https://github.com/mnielsen/neural-networks-and-deep-learning
+
+New portions created by the team have been annotated
 """
 
 #### Libraries
@@ -68,6 +73,9 @@ class Network():
 
         for j in range(epochs):
             if j % 5 == 0:
+
+                # We decay the learning rate over the epochs
+                # Team creation
                 eta = eta/2
                 print("eta is: " + str(eta))
             random.shuffle(training_data)
@@ -87,6 +95,7 @@ class Network():
                 print("Epoch {0} complete".format(j))
 
         # create a csv file to plot progress and results
+        # Team creation
         csv_name = "./outputs/" + '_'.join(map(str, self.sizes)) + ".csv"
         with open(csv_name,"w+") as csvf:
             out = csv.writer(csvf, delimiter=',', quoting=csv.QUOTE_ALL)
@@ -155,7 +164,7 @@ class Network():
     def evaluate(self, test_data):
         test_results = [(np.argmax(self.feedforward(x)), np.argmax(y)) for (x, y) in test_data]
         return sum(int(x == y) for (x, y) in test_results)
-    
+
     def cost_derivative(self, output_activations, y):
         """Return the vector of partial derivatives \partial C_x /
         \partial a for the output activations."""

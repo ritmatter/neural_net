@@ -1,7 +1,6 @@
 # Average Dummy Variables
 # Calculates the Average Value for every variable
-# This average will be used as the dummy variable for restaurants
-# missing this feature
+# This average will be used as the dummy variable for restaurants missing this feature
 
 from pymongo import MongoClient
 
